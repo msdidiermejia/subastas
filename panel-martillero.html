@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel del Martillero - SubaCasanare</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/panel-martillero.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+<body>
+    <div class="martillero-container">
+        <div class="martillero-header">
+            <div class="header-left">
+                <div class="brand-section">
+                    <img src="images/logo_negativo.png" alt="SubaCasanare" class="header-logo">
+                    <div>
+                        <h2>Panel del Martillero</h2>
+                        <span class="estado-subasta" id="estadoSubasta">⏸️ PAUSADA</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="martillero-info">
+                    <i data-lucide="mic"></i>
+                    <strong id="nombreMartillero">—</strong>
+                </div>
+                <a href="dashboard.html" class="btn-exit">← Salir</a>
+            </div>
+        </div>
+
+        <div class="martillero-content">
+            <!-- Lote actual + navegación -->
+            <div class="col-lote">
+                <div class="lote-actual-card">
+                    <div class="card-header">
+                        <h3>Lote <span id="loteNumero">#15</span></h3>
+                        <span class="lote-tipo" id="loteTipo">Ganado de Ceba</span>
+                    </div>
+                    <div class="lote-grid">
+                        <div class="info-item">
+                            <span class="label">Cantidad</span>
+                            <span class="value" id="loteCantidad">10 cabezas</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Sexo</span>
+                            <span class="value" id="loteSexo">Macho</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Raza</span>
+                            <span class="value" id="loteRaza">Brahman</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Peso Prom.</span>
+                            <span class="value" id="lotePeso">450 kg</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Peso Total</span>
+                            <span class="value" id="lotePesoTotal">4,500 kg</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Precio Base</span>
+                            <span class="value" id="precioBase">$15,000,000</span>
+                        </div>
+                        <div class="info-item info-item--full">
+                            <span class="label">Procedencia</span>
+                            <span class="value" id="loteProcedencia">Finca El Paraíso, Yopal</span>
+                        </div>
+                        <div class="info-item info-item--full">
+                            <span class="label">Observaciones</span>
+                            <span class="value value--obs" id="loteObservaciones">Animales en buen estado sanitario, vacunados.</span>
+                        </div>
+                    </div>
+
+                    <div class="precio-actual-section">
+                        <div class="precio-display">
+                            <span class="label">Precio Actual</span>
+                            <div class="precio" id="precioActual">$15,000,000</div>
+                        </div>
+                        <div class="ultima-puja" id="ultimaPuja">
+                            <span class="label">Última puja:</span>
+                            <span class="puja-info">Sin pujas aún</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navegación de lotes -->
+                <div class="navegacion-lotes">
+                    <h4>Navegación de Lotes</h4>
+                    <div class="lotes-buscador">
+                        <input type="text" id="buscarLote" placeholder="🔍 Buscar lote..." oninput="renderizarListaLotes()">
+                    </div>
+                    <div class="lotes-lista" id="lotesLista"></div>
+                </div>
+            </div>
+
+            <!-- Estadísticas + pujas -->
+            <div class="col-derecha">
+                <!-- Estadísticas en Vivo -->
+                <div class="estadisticas-card">
+                    <h4><i data-lucide="activity"></i> Estadísticas en Vivo</h4>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-value" id="totalPujas">0</span>
+                            <span class="stat-label">Pujas</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="participantesActivos">0</span>
+                            <span class="stat-label">Participantes</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="presenciales">0</span>
+                            <span class="stat-label">Coliseo</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="remotos">0</span>
+                            <span class="stat-label">Remoto</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pujas en tiempo real -->
+                <div class="pujas-panel">
+                    <div class="pujas-header">
+                        <h3><i data-lucide="trending-up"></i> Pujas en Tiempo Real</h3>
+                        <span id="pujasCount">0 pujas</span>
+                    </div>
+                    <div class="pujas-stream" id="pujasStream">
+                        <div class="no-pujas">
+                            <span class="icon">⏳</span>
+                            <p>Esperando pujas...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/panel-martillero.js"></script>
+</body>
+</html>

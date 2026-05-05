@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SubaCasanare</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <img src="images/logo.png" alt="SubaCasanare Logo" class="brand-logo">
+            </div>
+            <div class="nav-menu">
+                <a href="#inicio" class="nav-link active" onclick="mostrarSeccion('inicio')">Inicio</a>
+                <a href="#mis-pujas" class="nav-link" onclick="mostrarSeccion('mis-pujas')">Mis Pujas</a>
+                <a href="#perfil" class="nav-link" onclick="mostrarSeccion('perfil')">Mi Perfil</a>
+                <a href="catalogo.html" class="nav-link">Catálogo</a>
+            </div>
+            <div class="nav-actions">
+                <div class="paleta-badge">
+                    <span>Paleta</span>
+                    <strong id="userPaleta">#000</strong>
+                </div>
+                <button onclick="cerrarSesion()" class="btn-logout" title="Cerrar Sesión">
+                    <i data-lucide="log-out"></i>
+                    <span class="logout-label">Cerrar Sesión</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Sección Inicio -->
+        <section id="seccion-inicio" class="dashboard-section">
+            <header class="dashboard-header">
+                <div class="header-content">
+                    <div>
+                        <h1>Bienvenido, <span id="welcomeMsg">Usuario</span></h1>
+                        <p class="header-subtitle">Gestiona tus subastas y participa en tiempo real</p>
+                    </div>
+                </div>
+            </header>
+
+            <main class="dashboard-main">
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <div class="action-card live">
+                        <div class="action-icon"><i data-lucide="radio"></i></div>
+                        <div class="action-content">
+                            <h3>Subasta en Vivo</h3>
+                            <p>Únete a la subasta activa ahora</p>
+                            <div class="live-indicator">
+                                <span class="pulse"></span>
+                                <span>EN VIVO</span>
+                            </div>
+                        </div>
+                        <a href="subasta-live.html" class="btn btn-primary">Entrar</a>
+                    </div>
+
+                    <div class="action-card">
+                        <div class="action-icon"><i data-lucide="layout-list"></i></div>
+                        <div class="action-content">
+                            <h3>Catálogo de Lotes</h3>
+                            <p>Revisa los lotes disponibles</p>
+                        </div>
+                        <a href="catalogo.html" class="btn btn-secondary">Ver Catálogo</a>
+                    </div>
+
+                    <div class="action-card" id="cardMartillero" style="display: none;">
+                        <div class="action-icon"><i data-lucide="mic"></i></div>
+                        <div class="action-content">
+                            <h3>Panel del Martillero</h3>
+                            <p>Visualiza lotes, pujas y estadísticas en vivo</p>
+                        </div>
+                        <a href="panel-martillero.html" class="btn btn-primary">Acceder</a>
+                    </div>
+
+                    <div class="action-card" id="cardTablero" style="display: none;">
+                        <div class="action-icon"><i data-lucide="monitor"></i></div>
+                        <div class="action-content">
+                            <h3>Tablero</h3>
+                            <p>Controla la subasta y el modo de puja</p>
+                        </div>
+                        <a href="tablero.html" class="btn btn-primary">Acceder</a>
+                    </div>
+
+                    <div class="action-card" id="cardAdmin" style="display: none;">
+                        <div class="action-icon"><i data-lucide="shield"></i></div>
+                        <div class="action-content">
+                            <h3>Panel de Administración</h3>
+                            <p>Gestiona eventos y usuarios</p>
+                        </div>
+                        <a href="panel-admin.html" class="btn btn-primary">Administrar</a>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i data-lucide="gavel"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="totalPujas">0</span>
+                            <span class="stat-label">Pujas Realizadas</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i data-lucide="trophy"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="lotesGanados">0</span>
+                            <span class="stat-label">Lotes Ganados</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i data-lucide="dollar-sign"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="totalInvertido">$0</span>
+                            <span class="stat-label">Total Invertido</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Próximas Subastas -->
+                <div class="section-card">
+                    <h3>📅 Próximas Subastas</h3>
+                    <div class="event-list">
+                        <div class="event-item">
+                            <div class="event-date">
+                                <span class="day">15</span>
+                                <span class="month">MAR</span>
+                            </div>
+                            <div class="event-details">
+                                <h4>Subasta Ganadera Mensual</h4>
+                                <p>📍 Yopal, Casanare | ⏰ 9:00 AM</p>
+                                <p>150 lotes de ganado de ceba y levante</p>
+                            </div>
+                            <button class="btn btn-outline">Recordar</button>
+                        </div>
+                        <div class="event-item">
+                            <div class="event-date">
+                                <span class="day">22</span>
+                                <span class="month">MAR</span>
+                            </div>
+                            <div class="event-details">
+                                <h4>Subasta Especial de Cría</h4>
+                                <p>📍 Aguazul, Casanare | ⏰ 10:00 AM</p>
+                                <p>80 lotes de ganado de cría certificado</p>
+                            </div>
+                            <button class="btn btn-outline">Recordar</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </section>
+
+        <!-- Sección Mis Pujas -->
+        <section id="seccion-mis-pujas" class="dashboard-section" style="display: none;">
+            <header class="dashboard-header">
+                <div class="header-content">
+                    <div>
+                        <h1>Mis Pujas</h1>
+                        <p class="header-subtitle">Historial completo de tu participación en subastas</p>
+                    </div>
+                    <div class="header-export-btns">
+                        <button onclick="exportarMisPujasExcel()" class="btn-export btn-excel">📊 Excel</button>
+                        <button onclick="exportarMisPujasPDF()" class="btn-export btn-pdf">📄 PDF</button>
+                    </div>
+                </div>
+            </header>
+
+            <main class="dashboard-main">
+                <!-- Filtros -->
+                <div class="filters-bar">
+                    <select id="filtroEstadoPuja" onchange="filtrarPujas()">
+                        <option value="">Todos los estados</option>
+                        <option value="ganada">Ganadas</option>
+                        <option value="superada">Superadas</option>
+                        <option value="activa">Activas</option>
+                    </select>
+                    <div class="filtro-fechas">
+                        <input type="date" id="filtroFechaInicio" onchange="filtrarPujas()" placeholder="Desde">
+                        <span class="fecha-sep">—</span>
+                        <input type="date" id="filtroFechaFin" onchange="filtrarPujas()" placeholder="Hasta">
+                    </div>
+                    <button class="btn btn-outline btn-limpiar" onclick="limpiarFiltros()">✕ Limpiar</button>
+                </div>
+
+                <!-- Tabla de Pujas -->
+                <div class="table-card">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Lote</th>
+                                <th>Mi Puja</th>
+                                <th>Puja Actual</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaPujas">
+                            <!-- Se llenará dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </section>
+
+        <!-- Sección Mi Perfil -->
+        <section id="seccion-perfil" class="dashboard-section" style="display: none;">
+            <header class="dashboard-header">
+                <div class="header-content">
+                    <div>
+                        <h1>Mi Perfil</h1>
+                        <p class="header-subtitle">Administra tu información personal y preferencias</p>
+                    </div>
+                </div>
+            </header>
+
+            <main class="dashboard-main">
+                <div class="profile-grid">
+                    <!-- Información Personal -->
+                    <div class="profile-card">
+                        <h3>👤 Información Personal</h3>
+                        <form id="formPerfil">
+                            <div class="form-group">
+                                <label>Nombre Completo</label>
+                                <input type="text" id="perfilNombre" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Cédula</label>
+                                <input type="text" id="perfilCedula" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="perfilEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Teléfono</label>
+                                <input type="tel" id="perfilTelefono" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                        </form>
+                    </div>
+
+                    <!-- Cambiar Contraseña -->
+                    <div class="profile-card">
+                        <h3>🔒 Cambiar Contraseña</h3>
+                        <form id="formPassword">
+                            <div class="form-group">
+                                <label>Contraseña Actual</label>
+                                <input type="password" id="passwordActual" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Nueva Contraseña</label>
+                                <input type="password" id="passwordNueva" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Confirmar Nueva Contraseña</label>
+                                <input type="password" id="passwordConfirmar" required>
+                            </div>
+                            <button type="submit" class="btn btn-secondary">Actualizar Contraseña</button>
+                        </form>
+                    </div>
+
+                    <!-- Información de Cuenta -->
+                    <div class="profile-card">
+                        <h3>📊 Información de Cuenta</h3>
+                        <div class="info-list">
+                            <div class="info-item">
+                                <span class="info-label">Paleta Digital:</span>
+                                <span class="info-value paleta-highlight" id="perfilPaleta">#000</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Tipo de Usuario:</span>
+                                <span class="info-value" id="perfilTipo">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Fecha de Registro:</span>
+                                <span class="info-value" id="perfilFechaRegistro">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Estado:</span>
+                                <span class="badge badge-activo">Activo</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Preferencias -->
+                    <div class="profile-card">
+                        <h3>⚙️ Preferencias</h3>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="prefNotificaciones" checked>
+                                Recibir notificaciones por email
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="prefRecordatorios" checked>
+                                Recordatorios de subastas
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="prefResumen" checked>
+                                Resumen semanal de actividad
+                            </label>
+                        </div>
+                        <button onclick="guardarPreferencias()" class="btn btn-outline">Guardar Preferencias</button>
+                    </div>
+                </div>
+            </main>
+        </section>
+    </div>
+
+    <script src="js/exportar.js"></script>
+    <script src="js/dashboard.js"></script>
+
+    <!-- Modal Ver Detalle Puja -->
+    <div id="modalDetallePuja" class="modal-overlay" style="display:none;" onclick="cerrarDetalle(event)">
+        <div class="modal-detalle">
+            <div class="modal-detalle-header">
+                <h3>Detalle de Puja</h3>
+                <button class="modal-close" onclick="cerrarDetallePuja()">✕</button>
+            </div>
+            <div class="modal-detalle-body">
+                <div class="detalle-lote-badge" id="detalleLoteBadge">Lote #—</div>
+
+                <div class="detalle-seccion-titulo">Información de la Puja</div>
+                <div class="detalle-grid">
+                    <div class="detalle-item">
+                        <span class="detalle-label">Fecha</span>
+                        <span class="detalle-value" id="detalleFecha">—</span>
+                    </div>
+                    <div class="detalle-item">
+                        <span class="detalle-label">Estado</span>
+                        <span id="detalleEstadoBadge">—</span>
+                    </div>
+                    <div class="detalle-item">
+                        <span class="detalle-label">Mi Puja</span>
+                        <span class="detalle-value detalle-monto" id="detalleMonto">—</span>
+                    </div>
+                    <div class="detalle-item">
+                        <span class="detalle-label">Puja Final del Lote</span>
+                        <span class="detalle-value" id="detallePujaActual">—</span>
+                    </div>
+                </div>
+
+                <div class="detalle-seccion-titulo">Información del Lote</div>
+                <div class="detalle-grid">
+                    <div class="detalle-item">
+                        <span class="detalle-label">Cantidad</span>
+                        <span class="detalle-value" id="detalleCantidad">—</span>
+                    </div>
+                    <div class="detalle-item">
+                        <span class="detalle-label">Raza</span>
+                        <span class="detalle-value" id="detalleRaza">—</span>
+                    </div>
+                    <div class="detalle-item">
+                        <span class="detalle-label">Sexo</span>
+                        <span class="detalle-value" id="detalleSexo">—</span>
+                    </div>
+                    <div class="detalle-item">
+                        <span class="detalle-label">Peso Promedio</span>
+                        <span class="detalle-value" id="detallePesoProm">—</span>
+                    </div>
+                    <div class="detalle-item">
+                        <span class="detalle-label">Peso Total</span>
+                        <span class="detalle-value" id="detallePesoTotal">—</span>
+                    </div>
+                    <div class="detalle-item">
+                        <span class="detalle-label">Vendedor</span>
+                        <span class="detalle-value" id="detalleVendedor">—</span>
+                    </div>
+                    <div class="detalle-item detalle-item--full">
+                        <span class="detalle-label">Procedencia</span>
+                        <span class="detalle-value" id="detalleProcedencia">—</span>
+                    </div>
+                </div>
+
+                <div class="detalle-resultado" id="detalleResultado"></div>
+
+                <!-- Liquidación (solo pujas ganadas) -->
+                <div id="detalleLiquidacion" style="display:none;">
+                    <div class="detalle-seccion-titulo">Liquidación</div>
+                    <div class="detalle-grid">
+                        <div class="detalle-item">
+                            <span class="detalle-label">Modalidad</span>
+                            <span class="detalle-value" id="liqModalidad">—</span>
+                        </div>
+                        <div class="detalle-item">
+                            <span class="detalle-label">Precio / kg</span>
+                            <span class="detalle-value" id="liqPrecioKilo">—</span>
+                        </div>
+                        <div class="detalle-item">
+                            <span class="detalle-label">Peso Total</span>
+                            <span class="detalle-value" id="liqPesoTotal">—</span>
+                        </div>
+                        <div class="detalle-item">
+                            <span class="detalle-label">Valor del Ganado</span>
+                            <span class="detalle-value" id="liqValorGanado">—</span>
+                        </div>
+                        <div class="detalle-item">
+                            <span class="detalle-label">Comisión (8%)</span>
+                            <span class="detalle-value" id="liqComision">—</span>
+                        </div>
+                        <div class="detalle-item">
+                            <span class="detalle-label detalle-label--total">Total a Pagar</span>
+                            <span class="detalle-value detalle-total" id="liqTotal">—</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer con acciones -->
+            <div class="modal-detalle-footer" id="modalDetallePujaFooter" style="display:none;">
+                <button class="btn btn-outline btn-sm" onclick="descargarLiquidacionExcel()">
+                    <i data-lucide="table-2"></i> Excel
+                </button>
+                <button class="btn btn-primary btn-sm" onclick="descargarLiquidacionPDF()">
+                    <i data-lucide="file-down"></i> Descargar Liquidación
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

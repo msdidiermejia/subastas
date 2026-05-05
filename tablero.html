@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablero - SubaCasanare</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/tablero.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+<body>
+    <div class="tablero-container">
+        <div class="tablero-header">
+            <div class="header-left">
+                <img src="images/logo_negativo.png" alt="SubaCasanare" class="header-logo">
+                <div>
+                    <h2>TABLERO</h2>
+                    <span class="estado-badge" id="estadoBadge">⏸️ EN ESPERA</span>
+                </div>
+            </div>
+            <div class="header-center">
+                <div class="lote-titulo">
+                    Lote <span id="loteNumero">#15</span>
+                    <span class="lote-tipo-badge" id="loteTipo">Ganado de Ceba</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="modo-subasta-toggle">
+                    <span class="modo-label">Modo:</span>
+                    <button id="btnModoSubasta" class="btn-modo-subasta" onclick="toggleModoSubasta()">
+                        <span id="modoIcon">⚖️</span>
+                        <span id="modoTexto">Por Kilo</span>
+                    </button>
+                </div>
+                <div class="tablero-info">
+                    <span><i data-lucide="layout-dashboard"></i> Tablero:</span>
+                    <strong id="nombreTablero">—</strong>
+                </div>
+                <a href="dashboard.html" class="btn-exit">← Salir</a>
+            </div>
+        </div>
+
+        <div class="tablero-content">
+            <!-- Columna izquierda: precio en vivo + controles (LO MÁS IMPORTANTE) -->
+            <div class="col-precio">
+                <div class="precio-vivo-card">
+                    <div class="precio-vivo-label" id="precioVivoLabel">PRECIO ACTUAL</div>
+                    <div class="precio-vivo" id="precioActual">$15,000,000</div>
+                    <div class="precio-kilo" id="precioKiloDisplay" style="display:none;">
+                        <span id="precioKiloValor">$3,333</span><span class="kilo-unit">/kg</span>
+                    </div>
+                    <div class="ultima-puja-display" id="ultimaPujaDisplay">
+                        <span class="upd-label">Última paleta:</span>
+                        <span class="upd-paleta" id="ultimaPaleta">—</span>
+                    </div>
+                </div>
+
+                <!-- Controles del tablero -->
+                <div class="controles-tablero">
+                    <button id="btnIniciar" class="btn-ctrl btn-iniciar" onclick="iniciarSubasta()">▶ Iniciar</button>
+                    <button id="btnPausar" class="btn-ctrl btn-pausar" onclick="pausarSubasta()" disabled>⏸ Pausar</button>
+                    <button id="btnCerrar" class="btn-ctrl btn-cerrar" onclick="abrirModalCierre()" disabled><i data-lucide="gavel"></i> Cerrar Lote</button>
+                </div>
+
+                <!-- Configuración de precios (aquí porque se usa antes de iniciar) -->
+                <div class="config-precios-card" id="configPreciosCard">
+                    <div class="config-header">
+                        <h4><i data-lucide="settings-2"></i> Configurar Precios</h4>
+                    </div>
+                    <div class="config-fields" id="configFieldsLote">
+                        <div class="config-field">
+                            <label>Precio Base ($)</label>
+                            <input type="number" id="inputPrecioBase" value="15000000" min="0" step="100000" onchange="aplicarConfigPrecios()">
+                        </div>
+                        <div class="config-field">
+                            <label>Incremento por puja ($)</label>
+                            <input type="number" id="inputIncremento" value="500000" min="0" step="50000" onchange="aplicarConfigPrecios()">
+                        </div>
+                    </div>
+                    <div class="config-fields" id="configFieldsKilo" style="display:none;">
+                        <div class="config-field">
+                            <label>Precio Base / kg ($)</label>
+                            <input type="number" id="inputPrecioBaseKilo" value="3333" min="0" step="100" onchange="aplicarConfigPrecios()">
+                        </div>
+                        <div class="config-field">
+                            <label>Incremento / kg ($)</label>
+                            <input type="number" id="inputIncrementoKilo" value="100" min="0" step="50" onchange="aplicarConfigPrecios()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna central: pujas en tiempo real + estadísticas -->
+            <div class="col-pujas">
+                <div class="pujas-card">
+                    <div class="pujas-card-header">
+                        <h3>Pujas en Tiempo Real</h3>
+                        <span class="pujas-count" id="pujasCount">0 pujas</span>
+                    </div>
+                    <div class="pujas-stream" id="pujasStream">
+                        <div class="no-pujas">
+                            <span>⏳</span>
+                            <p>Esperando pujas...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Estadísticas -->
+                <div class="stats-card">
+                    <h4><i data-lucide="activity"></i> Estadísticas en Vivo</h4>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-val" id="totalPujas">0</span>
+                            <span class="stat-lbl">Pujas</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-val" id="participantes">0</span>
+                            <span class="stat-lbl">Participantes</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-val" id="presenciales">0</span>
+                            <span class="stat-lbl">Coliseo</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-val" id="remotos">0</span>
+                            <span class="stat-lbl">Remoto</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna derecha: datos del lote + navegación (referencia) -->
+            <div class="col-lote">
+                <div class="lote-card">
+                    <div class="lote-card-header">
+                        <h3>Detalles del Lote</h3>
+                    </div>
+                    <div class="lote-grid">
+                        <div class="lote-field">
+                            <span class="lf-label">Cantidad</span>
+                            <span class="lf-value" id="loteCantidad">10 cabezas</span>
+                        </div>
+                        <div class="lote-field">
+                            <span class="lf-label">Sexo</span>
+                            <span class="lf-value" id="loteSexo">Macho</span>
+                        </div>
+                        <div class="lote-field">
+                            <span class="lf-label">Raza</span>
+                            <span class="lf-value" id="loteRaza">Brahman</span>
+                        </div>
+                        <div class="lote-field">
+                            <span class="lf-label">Peso Promedio</span>
+                            <span class="lf-value" id="lotePeso">450 kg</span>
+                        </div>
+                        <div class="lote-field">
+                            <span class="lf-label">Peso Total</span>
+                            <span class="lf-value" id="lotePesoTotal">4,500 kg</span>
+                        </div>
+                        <div class="lote-field">
+                            <span class="lf-label">Procedencia</span>
+                            <span class="lf-value" id="loteProcedencia">Finca El Paraíso, Yopal</span>
+                        </div>
+                        <div class="lote-field lote-field--full">
+                            <span class="lf-label">Observaciones</span>
+                            <span class="lf-value lf-obs" id="loteObservaciones">Animales en buen estado sanitario, vacunados.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Precio base -->
+                <div class="precio-base-card">
+                    <div class="pb-item">
+                        <span class="pb-label">Precio Base</span>
+                        <span class="pb-value" id="precioBase">$15,000,000</span>
+                    </div>
+                    <div class="pb-item" id="precioKiloWrap">
+                        <span class="pb-label">Base / kg</span>
+                        <span class="pb-value" id="precioBaseKilo">$3,333/kg</span>
+                    </div>
+                </div>
+
+                <!-- Navegación de lotes -->
+                <div class="nav-lotes-card">
+                    <h4>Lotes del Evento</h4>
+                    <div class="lotes-buscador">
+                        <input type="text" id="buscarLote" placeholder="🔍 Buscar lote..." oninput="renderizarListaLotes()">
+                    </div>
+                    <div class="lotes-lista" id="lotesLista"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal cierre de lote -->
+    <div id="modalCierre" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h3><i data-lucide="gavel"></i> Cerrar Lote <span id="modalLoteNum">#15</span></h3>
+            <div class="ganador-info">
+                <p>Ganador</p>
+                <div class="ganador-paleta" id="ganadorPaleta">#000</div>
+                <div class="ganador-precio" id="ganadorPrecio">$0</div>
+                <div class="ganador-modo" id="ganadorModo"></div>
+            </div>
+            <div class="modal-actions">
+                <button onclick="confirmarCierre()" class="btn btn-primary">Confirmar y Adjudicar</button>
+                <button onclick="cerrarModal()" class="btn btn-outline">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/tablero.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Lotes - SubaCasanare</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/catalogo.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <img src="images/logo.png" alt="SubaCasanare Logo" class="brand-logo">
+            </div>
+            <div class="nav-actions">
+                <a href="dashboard.html" class="btn-back">← Volver al Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="catalogo-container">
+        <header class="catalogo-header">
+            <div>
+                <h1>📋 Catálogo de Lotes</h1>
+                <p class="header-subtitle">Subasta Ganadera - Marzo 2026 | Yopal, Casanare</p>
+            </div>
+        </header>
+
+        <main class="catalogo-main">
+            <div class="filtros">
+                <select id="filtroTipo" onchange="filtrarLotes()">
+                    <option value="">Todas las categorías</option>
+                    <!-- Se llena dinámicamente desde el módulo de categorías -->
+                </select>
+                <div class="filtro-peso">
+                    <span class="filtro-peso-label">Peso (kg):</span>
+                    <input type="number" id="pesoMin" placeholder="Mín" min="0" onchange="filtrarLotes()">
+                    <span class="fecha-sep">—</span>
+                    <input type="number" id="pesoMax" placeholder="Máx" min="0" onchange="filtrarLotes()">
+                </div>
+                <button class="btn-limpiar-catalogo" onclick="limpiarFiltros()">✕ Limpiar</button>
+                <div class="filtros-info">
+                    <span id="totalLotes">0</span> lotes disponibles
+                </div>
+            </div>
+
+            <div class="lotes-grid" id="lotesGrid">
+                <!-- Los lotes se generarán dinámicamente -->
+            </div>
+        </main>
+    </div>
+
+    <script src="js/catalogo.js"></script>
+
+    <!-- Lightbox galería -->
+    <div id="galeriaOverlay" style="display:none;"
+         onclick="if(event.target===this) cerrarGaleria()"
+         style="position:fixed;inset:0;background:rgba(0,0,0,0.88);display:flex;align-items:center;justify-content:center;z-index:1000;">
+        <button class="galeria-btn galeria-close" onclick="cerrarGaleria()">✕</button>
+        <button class="galeria-btn galeria-prev" id="galeriaPrev" onclick="galeriaNavegar(-1)">‹</button>
+        <div class="galeria-content">
+            <img id="galeriaImg" src="" alt="Foto lote">
+            <div class="galeria-contador" id="galeriaContador">1 / 1</div>
+        </div>
+        <button class="galeria-btn galeria-next" id="galeriaNext" onclick="galeriaNavegar(1)">›</button>
+    </div>
+</body>
+</html>

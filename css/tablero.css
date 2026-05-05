@@ -1,0 +1,660 @@
+:root {
+    --gold: #E8751A;
+    --brown: #3D1A0A;
+    --dark: #0f0f0f;
+    --darker: #1a1a1a;
+    --card-bg: #1e1e1e;
+    --border: rgba(255,255,255,0.08);
+    --text-muted: #888;
+    --green: #4ade80;
+    --red: #ef4444;
+    --blue: #3b82f6;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background: var(--dark);
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.tablero-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* ── Header ── */
+.tablero-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, var(--brown), #1a1a1a);
+    border-bottom: 2px solid var(--gold);
+    padding: 12px 24px;
+    gap: 16px;
+    flex-shrink: 0;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-logo { height: 36px; width: auto; max-width: 140px; object-fit: contain; }
+
+.header-left h2 {
+    font-size: 1.1em;
+    color: var(--gold);
+    letter-spacing: 2px;
+}
+
+.estado-badge {
+    display: inline-block;
+    font-size: 0.75em;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.1);
+    letter-spacing: 1px;
+}
+.estado-badge.activa { background: rgba(239,68,68,0.2); color: #ef4444; }
+.estado-badge.pausada { background: rgba(255,255,255,0.08); color: #aaa; }
+
+.header-center {
+    flex: 1;
+    text-align: center;
+}
+
+.lote-titulo {
+    font-size: 1.6em;
+    font-weight: 800;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.lote-tipo-badge {
+    font-size: 0.55em;
+    background: var(--gold);
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 700;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.modo-subasta-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.modo-label { font-size: 0.8em; color: var(--text-muted); }
+
+.btn-modo-subasta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85em;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+.btn-modo-subasta:hover:not(:disabled) { background: rgba(232,117,26,0.2); border-color: var(--gold); }
+.btn-modo-subasta:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.tablero-info { font-size: 0.85em; color: var(--text-muted); }
+.tablero-info strong { color: #fff; }
+
+.btn-exit {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.85em;
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+.btn-exit:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
+
+/* ── Content ── */
+.tablero-content {
+    display: grid;
+    grid-template-columns: 1fr 380px 260px;
+    gap: 16px;
+    padding: 16px;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* ── Cards base ── */
+.lote-card, .precio-base-card, .nav-lotes-card,
+.precio-vivo-card, .pujas-card, .stats-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+/* ── Columna lote ── */
+.col-lote {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+}
+
+.lote-card-header h3 {
+    font-size: 0.85em;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
+
+.lote-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.lote-field { display: flex; flex-direction: column; gap: 2px; }
+.lote-field--full { grid-column: 1 / -1; }
+
+.lf-label {
+    font-size: 0.7em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.lf-value {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #fff;
+}
+
+.lf-obs {
+    font-size: 0.8em;
+    font-weight: 400;
+    color: #bbb;
+    font-style: italic;
+}
+
+.precio-base-card {
+    display: flex;
+    gap: 12px;
+}
+
+.pb-item { flex: 1; }
+
+.pb-label {
+    display: block;
+    font-size: 0.7em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.pb-value {
+    font-size: 1em;
+    font-weight: 700;
+    color: var(--gold);
+}
+
+.nav-lotes-card h4 {
+    font-size: 0.8em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.lotes-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.lote-mini {
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    font-size: 0.82em;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #ccc;
+}
+.lote-mini:hover { background: rgba(255,255,255,0.08); }
+.lote-mini.activo { border-color: var(--gold); color: var(--gold); font-weight: 700; }
+.lote-mini.completado { opacity: 0.4; cursor: default; text-decoration: line-through; }
+
+/* ── Columna precio ── */
+.col-precio {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.precio-vivo-card {
+    text-align: center;
+    padding: 40px 24px;
+    border-color: var(--gold);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+}
+
+.precio-vivo-label {
+    font-size: 0.75em;
+    color: var(--text-muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.precio-vivo {
+    font-size: 4.5em;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+    transition: all 0.3s;
+}
+
+.precio-kilo {
+    font-size: 1.4em;
+    font-weight: 700;
+    color: #60a5fa;
+}
+
+.kilo-unit { font-size: 0.7em; color: var(--text-muted); }
+
+.ultima-puja-display {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9em;
+    color: var(--text-muted);
+    margin-top: 8px;
+}
+
+.upd-paleta {
+    font-size: 1.3em;
+    font-weight: 800;
+    color: #fff;
+}
+
+.controles-tablero {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-ctrl {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.9em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.btn-ctrl:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.btn-iniciar { background: #16a34a; color: #fff; }
+.btn-iniciar:hover:not(:disabled) { background: #15803d; }
+
+.btn-pausar { background: var(--gold); color: #fff; }
+.btn-pausar:hover:not(:disabled) { background: #c96212; }
+
+.btn-cerrar { background: #dc2626; color: #fff; }
+.btn-cerrar:hover:not(:disabled) { background: #b91c1c; }
+
+/* ── Columna pujas ── */
+.col-pujas {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow: hidden;
+}
+
+.pujas-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.pujas-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.pujas-card-header h3 {
+    font-size: 0.85em;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.pujas-count {
+    font-size: 0.75em;
+    color: var(--text-muted);
+}
+
+.pujas-stream {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.no-pujas {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 24px;
+    font-size: 0.85em;
+}
+
+.puja-row {
+    display: grid;
+    grid-template-columns: 60px 24px 1fr auto auto;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.04);
+    border-left: 3px solid transparent;
+    font-size: 0.82em;
+    transition: all 0.3s;
+}
+
+.puja-row.nueva {
+    border-left-color: var(--gold);
+    background: rgba(232,117,26,0.08);
+    animation: flashIn 0.4s ease;
+}
+
+@keyframes flashIn {
+    from { opacity: 0; transform: translateX(10px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.pr-paleta { font-weight: 800; color: var(--gold); }
+.pr-tipo { font-size: 1em; }
+.pr-precio { font-weight: 700; color: #fff; }
+.pr-kilo { font-size: 0.8em; color: #60a5fa; }
+.pr-tiempo { font-size: 0.75em; color: var(--text-muted); text-align: right; }
+
+/* ── Stats ── */
+.stats-card h4 {
+    font-size: 0.8em;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255,255,255,0.04);
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.stat-val {
+    font-size: 1.6em;
+    font-weight: 800;
+    color: var(--gold);
+}
+
+.stat-lbl {
+    font-size: 0.7em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+/* ── Modal ── */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.modal-content {
+    background: var(--card-bg);
+    border: 2px solid var(--gold);
+    border-radius: 16px;
+    padding: 32px;
+    min-width: 340px;
+    text-align: center;
+}
+
+.modal-content h3 {
+    font-size: 1.3em;
+    color: var(--gold);
+    margin-bottom: 20px;
+}
+
+.ganador-info { margin-bottom: 24px; }
+.ganador-info p { color: var(--text-muted); font-size: 0.85em; margin-bottom: 8px; }
+
+.ganador-paleta {
+    font-size: 3em;
+    font-weight: 900;
+    color: var(--gold);
+}
+
+.ganador-precio {
+    font-size: 1.6em;
+    font-weight: 700;
+    color: var(--green);
+    margin-top: 4px;
+}
+
+.ganador-modo {
+    font-size: 0.9em;
+    color: var(--text-muted);
+    margin-top: 6px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.btn { padding: 10px 24px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; font-size: 0.9em; }
+.btn-primary { background: var(--gold); color: #fff; }
+.btn-outline { background: transparent; border: 1px solid var(--border); color: #fff; }
+
+/* ── Config precios ── */
+.config-precios-card {
+    background: var(--card-bg);
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+    padding: 14px 16px;
+}
+
+.config-header h4 {
+    font-size: 0.8em;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
+
+.config-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.config-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.config-field label {
+    font-size: 0.7em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.config-field input {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.9em;
+    font-weight: 600;
+    padding: 7px 10px;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+}
+
+.config-field input:focus {
+    border-color: var(--gold);
+}
+
+.config-field input:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* ── Auto-puja (respaldo del vendedor) ── */
+.puja-row.auto-puja {
+    border-left-color: #f59e0b;
+    background: rgba(245, 158, 11, 0.07);
+}
+
+.badge-autopuja-tablero {
+    display: inline-block;
+    background: rgba(245, 158, 11, 0.15);
+    color: #b45309;
+    border: 1px solid rgba(245, 158, 11, 0.35);
+    border-radius: 20px;
+    font-size: 0.72em;
+    font-weight: 700;
+    padding: 2px 8px;
+}
+
+/* ── Buscador de lotes ── */
+.lotes-buscador {
+    margin-bottom: 8px;
+}
+
+.lotes-buscador input {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.82em;
+    padding: 7px 10px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.lotes-buscador input:focus {
+    border-color: var(--gold);
+}
+
+.lotes-buscador input::placeholder { color: #555; }
+
+.lotes-sin-resultado {
+    font-size: 0.78em;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 10px 0;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+    .tablero-content {
+        grid-template-columns: 1fr 320px;
+    }
+    .col-lote { display: none; } /* se oculta en tablet, accesible por modal */
+}
+
+@media (max-width: 768px) {
+    body { height: auto; overflow: auto; }
+
+    .tablero-container { height: auto; min-height: 100vh; }
+
+    .tablero-header {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 10px 14px;
+    }
+
+    .header-center { order: 3; width: 100%; text-align: center; }
+    .lote-titulo { font-size: 1.1em; }
+
+    .tablero-content {
+        grid-template-columns: 1fr;
+        height: auto;
+        overflow: visible;
+        padding: 10px;
+        gap: 12px;
+    }
+
+    .col-lote { display: flex; }
+    .col-lote, .col-precio, .col-pujas {
+        overflow: visible;
+    }
+
+    .precio-vivo { font-size: 2.4em; }
+
+    .controles-tablero { flex-direction: column; }
+
+    .config-precios-card { display: none; }
+
+    .modal-content { margin: 10px; padding: 20px; }
+}
+
+@media (max-width: 480px) {
+    .tablero-header { padding: 8px 10px; }
+    .header-logo { height: 28px; width: auto; max-width: 110px; }
+    .lote-titulo { font-size: 0.95em; }
+    .precio-vivo { font-size: 1.8em; }
+    .btn-ctrl { padding: 10px; font-size: 0.82em; }
+}

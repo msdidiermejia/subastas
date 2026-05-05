@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - SubaCasanare</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/panel-admin.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-brand">
+                    <img src="images/logo_negativo.png" alt="SubaCasanare" class="sidebar-logo">
+                    <div class="sidebar-header-actions">
+                        <a href="dashboard.html" class="btn-back-mobile" title="Volver al Dashboard">
+                            <i data-lucide="arrow-left"></i>
+                        </a>
+                        <button onclick="cerrarSesion()" class="btn-logout btn-logout-sidebar" title="Cerrar Sesión">
+                            <i data-lucide="log-out"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" onclick="mostrarSeccion('eventos')">
+                    <i data-lucide="calendar"></i>
+                    <span>Eventos</span>
+                </a>
+                <a href="#" class="nav-item" onclick="mostrarSeccion('lotes')">
+                    <i data-lucide="package"></i>
+                    <span>Lotes</span>
+                </a>
+                <a href="#" class="nav-item" onclick="mostrarSeccion('usuarios')">
+                    <i data-lucide="users"></i>
+                    <span>Usuarios</span>
+                </a>
+                <a href="#" class="nav-item" onclick="mostrarSeccion('aprobaciones')">
+                    <i data-lucide="shield-check"></i>
+                    <span>Aprobaciones</span>
+                    <span class="badge-nav" id="badgeAprobaciones" style="display:none;"></span>
+                </a>
+                <a href="#" class="nav-item" onclick="mostrarSeccion('paletas')">
+                    <i data-lucide="credit-card"></i>
+                    <span>Paletas</span>
+                    <span class="badge-nav" id="badgePaletas" style="display:none;"></span>
+                </a>
+                <a href="#" class="nav-item" onclick="mostrarSeccion('categorias')">
+                    <i data-lucide="tag"></i>
+                    <span>Categorías</span>
+                </a>
+                <a href="#" class="nav-item" onclick="mostrarSeccion('resultados')">
+                    <i data-lucide="bar-chart-2"></i>
+                    <span>Resultados</span>
+                </a>
+                <a href="#" class="nav-item" onclick="mostrarSeccion('reportes')">
+                    <i data-lucide="trending-up"></i>
+                    <span>Reportes Financieros</span>
+                </a>
+                <a href="#" class="nav-item" onclick="mostrarSeccion('configuracion')">
+                    <i data-lucide="settings"></i>
+                    <span>Configuración</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar"><i data-lucide="user-circle"></i></div>
+                    <div class="user-details">
+                        <span class="user-name" id="adminNombre">Administrador</span>
+                        <span class="user-role">Administrador</span>
+                    </div>
+                </div>
+                <a href="dashboard.html" class="btn-back">
+                    <span>←</span>
+                    <span>Volver al Dashboard</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-header">
+                <div class="header-left">
+                    <h1 id="tituloSeccion">Gestión de Eventos</h1>
+                    <p class="header-subtitle">Administra y controla todos los aspectos de la plataforma</p>
+                </div>
+            </header>
+
+            <!-- Sección Eventos -->
+            <section id="seccion-eventos" class="admin-section">
+                <div class="section-header">
+                    <h2>Eventos de Subasta</h2>
+                    <button onclick="abrirModalEvento()" class="btn btn-primary">+ Crear Evento</button>
+                </div>
+
+                <div class="stats-cards">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i data-lucide="calendar-days"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="totalEventos">0</span>
+                            <span class="stat-label">Total Eventos</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i data-lucide="radio"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="eventosActivos">0</span>
+                            <span class="stat-label">Activos</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i data-lucide="check-circle"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="eventosCompletados">0</span>
+                            <span class="stat-label">Completados</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre del Evento</th>
+                                <th>Fecha</th>
+                                <th>Ubicación</th>
+                                <th>Lotes</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaEventos">
+                            <!-- Se llenará dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Sección Lotes -->
+            <section id="seccion-lotes" class="admin-section" style="display: none;">
+                <div class="section-header">
+                    <h2>Gestión de Lotes</h2>
+                    <div class="header-actions">
+                        <button onclick="abrirModalLote()" class="btn btn-primary">+ Agregar Lote</button>
+                        <button onclick="exportarLotesExcel()" class="btn-export btn-excel"><i data-lucide="table-2"></i> Excel</button>
+                        <button onclick="exportarLotesPDF()" class="btn-export btn-pdf"><i data-lucide="file-down"></i> PDF</button>
+                    </div>
+                </div>
+
+                <div class="filtros-lotes">
+                    <select id="filtroEvento">
+                        <option value="">Todos los eventos</option>
+                    </select>
+                    <select id="filtroEstado">
+                        <option value="">Todos los estados</option>
+                        <option value="pendiente">Pendiente</option>
+                        <option value="subastado">Subastado</option>
+                    </select>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Lote #</th>
+                                <th>Tipo</th>
+                                <th>Cantidad</th>
+                                <th>Peso Prom.</th>
+                                <th>Raza</th>
+                                <th>Precio Base</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaLotes">
+                            <!-- Se llenará dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Sección Usuarios -->
+            <section id="seccion-usuarios" class="admin-section" style="display: none;">
+                <div class="section-header">
+                    <h2>Gestión de Usuarios</h2>
+                    <div class="header-actions">
+                        <button onclick="abrirModalCrearUsuario()" class="btn btn-primary">+ Registrar Usuario</button>
+                        <button onclick="exportarUsuariosExcel()" class="btn-export btn-excel"><i data-lucide="table-2"></i> Excel</button>
+                        <button onclick="exportarUsuariosPDF()" class="btn-export btn-pdf"><i data-lucide="file-down"></i> PDF</button>
+                    </div>
+                </div>
+
+                <div class="info-banner">
+                    <i data-lucide="info"></i>
+                    <div>
+                        <strong>Registro en Coliseo</strong>
+                        <p>Registra a ganaderos y clientes que visiten la oficina. El sistema asignará automáticamente su paleta digital.</p>
+                    </div>
+                </div>
+
+                <div class="stats-cards">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i data-lucide="users"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="totalUsuarios">0</span>
+                            <span class="stat-label">Total Usuarios</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i data-lucide="user-check"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="totalClientes">0</span>
+                            <span class="stat-label">Clientes</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i data-lucide="mic"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="totalMartilleros">0</span>
+                            <span class="stat-label">Martilleros</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filtros-usuarios">
+                    <input type="text" id="buscarUsuario" placeholder="🔍 Buscar por nombre, cédula o paleta..." class="search-input">
+                    <select id="filtroTipoUsuario">
+                        <option value="">Todos los tipos</option>
+                        <option value="cliente">Clientes</option>
+                        <option value="martillero">Martilleros</option>
+                        <option value="tablero">Tablero</option>
+                        <option value="admin">Administradores</option>
+                    </select>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Paleta</th>
+                                <th>Nombre</th>
+                                <th>Cédula</th>
+                                <th>Teléfono</th>
+                                <th>Email</th>
+                                <th>Tipo</th>
+                                <th>Fecha Registro</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaUsuarios">
+                            <!-- Se llenará dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Sección Resultados -->
+            <section id="seccion-resultados" class="admin-section" style="display: none;">
+                <div class="section-header">
+                    <h2>Resultados de Subastas</h2>
+                    <div class="header-actions">
+                        <button onclick="exportarResultadosExcel()" class="btn-export btn-excel"><i data-lucide="table-2"></i> Excel</button>
+                        <button onclick="exportarResultadosPDF()" class="btn-export btn-pdf"><i data-lucide="file-down"></i> PDF</button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Lote</th>
+                                <th>Ganador</th>
+                                <th>Precio Final</th>
+                                <th>Total Pujas</th>
+                                <th>Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaResultados">
+                            <!-- Se llenará dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Sección Reportes Financieros -->
+            <section id="seccion-reportes" class="admin-section" style="display: none;">
+                <div class="section-header">
+                    <h2>Reportes Financieros</h2>
+                    <div class="header-actions">
+                        <select id="periodoReporte" onchange="actualizarReportes()">
+                            <option value="hoy">Hoy</option>
+                            <option value="semana">Esta Semana</option>
+                            <option value="mes" selected>Este Mes</option>
+                            <option value="trimestre">Este Trimestre</option>
+                            <option value="año">Este Año</option>
+                            <option value="todo">Todo el Tiempo</option>
+                        </select>
+                        <button onclick="exportarReporteExcel()" class="btn-export btn-excel"><i data-lucide="table-2"></i> Excel</button>
+                        <button onclick="exportarReporteFinanciero()" class="btn-export btn-pdf"><i data-lucide="file-down"></i> PDF</button>
+                    </div>
+                </div>
+
+                <!-- KPIs Principales -->
+                <div class="kpi-grid">
+                    <div class="kpi-card primary">
+                        <div class="kpi-icon"><i data-lucide="dollar-sign"></i></div>
+                        <div class="kpi-content">
+                            <span class="kpi-label">Ingresos por Comisiones</span>
+                            <span class="kpi-value" id="totalComisiones">$0</span>
+                            <span class="kpi-change positive" id="cambioComisiones">+0%</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card success">
+                        <div class="kpi-icon"><i data-lucide="trending-up"></i></div>
+                        <div class="kpi-content">
+                            <span class="kpi-label">Volumen Total Transado</span>
+                            <span class="kpi-value" id="volumenTotal">$0</span>
+                            <span class="kpi-change" id="cambioVolumen">+0%</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card info">
+                        <div class="kpi-icon"><i data-lucide="gavel"></i></div>
+                        <div class="kpi-content">
+                            <span class="kpi-label">Lotes Subastados</span>
+                            <span class="kpi-value" id="lotesSubastados">0</span>
+                            <span class="kpi-change" id="cambioLotes">+0%</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card warning">
+                        <div class="kpi-icon"><i data-lucide="users"></i></div>
+                        <div class="kpi-content">
+                            <span class="kpi-label">Participantes Activos</span>
+                            <span class="kpi-value" id="participantesActivos">0</span>
+                            <span class="kpi-change" id="cambioParticipantes">+0%</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card neutral">
+                        <div class="kpi-icon"><i data-lucide="scale"></i></div>
+                        <div class="kpi-content">
+                            <span class="kpi-label">Precio Promedio / kg</span>
+                            <span class="kpi-value" id="precioKiloPromedio">$0</span>
+                            <span class="kpi-change" id="cambioPrecioKilo">+0%</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card neutral">
+                        <div class="kpi-icon"><i data-lucide="percent"></i></div>
+                        <div class="kpi-content">
+                            <span class="kpi-label">Margen Operativo</span>
+                            <span class="kpi-value" id="margenOperativo">0%</span>
+                            <span class="kpi-change positive" id="cambioMargen">estable</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Semáforo de salud -->
+                <div class="reporte-card full-width">
+                    <h3><i data-lucide="activity"></i> Salud del Negocio</h3>
+                    <div class="semaforo-grid" id="semaforoGrid"></div>
+                </div>
+
+                <!-- Tendencia + Desglose -->
+                <div class="reportes-grid">
+                    <div class="reporte-card">
+                        <h3><i data-lucide="bar-chart-2"></i> Tendencia de Ingresos</h3>
+                        <div id="graficoBarra" class="grafico-barra-wrap"></div>
+                    </div>
+                    <div class="reporte-card">
+                        <h3><i data-lucide="receipt"></i> Desglose de Comisiones</h3>
+                        <div class="comisiones-breakdown">
+                            <div class="breakdown-item">
+                                <div class="breakdown-label"><span class="dot cliente"></span>Comisión Compradores (8%)</div>
+                                <div class="breakdown-value" id="comisionClientes">$0</div>
+                            </div>
+                            <div class="breakdown-item">
+                                <div class="breakdown-label"><span class="dot vendedor"></span>Comisión Vendedores (3%)</div>
+                                <div class="breakdown-value" id="comisionVendedores">$0</div>
+                            </div>
+                            <div class="breakdown-item total">
+                                <div class="breakdown-label"><strong>Total Comisiones</strong></div>
+                                <div class="breakdown-value" id="comisionTotal">$0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rendimiento + Categorías -->
+                <div class="reportes-grid">
+                    <div class="reporte-card">
+                        <h3><i data-lucide="sliders-horizontal"></i> Métricas Operativas</h3>
+                        <div class="metricas-list">
+                            <div class="metrica-item">
+                                <span class="metrica-label">Ticket Promedio por Lote</span>
+                                <span class="metrica-value" id="precioPromedio">$0</span>
+                            </div>
+                            <div class="metrica-item">
+                                <span class="metrica-label">Pujas Promedio por Lote</span>
+                                <span class="metrica-value" id="pujasPromedio">0</span>
+                            </div>
+                            <div class="metrica-item">
+                                <span class="metrica-label">Tasa de Adjudicación</span>
+                                <span class="metrica-value" id="tasaConversion">0%</span>
+                            </div>
+                            <div class="metrica-item">
+                                <span class="metrica-label">Tiempo Promedio por Lote</span>
+                                <span class="metrica-value" id="tiempoPromedio">0 min</span>
+                            </div>
+                            <div class="metrica-item">
+                                <span class="metrica-label">Ingreso por Evento</span>
+                                <span class="metrica-value" id="ingresoPorEvento">$0</span>
+                            </div>
+                            <div class="metrica-item">
+                                <span class="metrica-label">Lotes por Evento</span>
+                                <span class="metrica-value" id="lotesPorEvento">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="reporte-card">
+                        <h3><i data-lucide="tag"></i> Volumen por Categoría</h3>
+                        <div class="categorias-list" id="categoriasList"></div>
+                    </div>
+                </div>
+
+                <!-- Coliseo vs Remoto -->
+                <div class="reporte-card full-width">
+                    <h3><i data-lucide="globe"></i> Canal de Participación: Coliseo vs Remoto</h3>
+                    <div class="comparativa-grid">
+                        <div class="comparativa-item presencial">
+                            <div class="comparativa-header"><i data-lucide="building-2"></i><span>Coliseo</span></div>
+                            <div class="comparativa-stats">
+                                <div class="stat"><span class="stat-value" id="pujasPresenciales">0</span><span class="stat-label">Pujas</span></div>
+                                <div class="stat"><span class="stat-value" id="porcentajePresencial">0%</span><span class="stat-label">del Total</span></div>
+                                <div class="stat"><span class="stat-value" id="ganadorasPresencial">0</span><span class="stat-label">Adjudicados</span></div>
+                            </div>
+                        </div>
+                        <div class="canal-barra-wrap">
+                            <div class="canal-barra" id="canalBarra"></div>
+                        </div>
+                        <div class="comparativa-item remoto">
+                            <div class="comparativa-header"><i data-lucide="wifi"></i><span>Remoto</span></div>
+                            <div class="comparativa-stats">
+                                <div class="stat"><span class="stat-value" id="pujasRemotas">0</span><span class="stat-label">Pujas</span></div>
+                                <div class="stat"><span class="stat-value" id="porcentajeRemoto">0%</span><span class="stat-label">del Total</span></div>
+                                <div class="stat"><span class="stat-value" id="ganadorasRemoto">0</span><span class="stat-label">Adjudicados</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Clientes + Proyecciones -->
+                <div class="reportes-grid">
+                    <div class="reporte-card">
+                        <h3><i data-lucide="trophy"></i> Top 5 Compradores</h3>
+                        <div class="ranking-list" id="topClientes"></div>
+                    </div>
+                    <div class="reporte-card">
+                        <h3><i data-lucide="line-chart"></i> Proyecciones</h3>
+                        <div class="proyeccion-grid">
+                            <div class="proyeccion-item">
+                                <span class="proyeccion-label">Proyección Mensual</span>
+                                <span class="proyeccion-value" id="proyeccionMensual">$0</span>
+                                <small>Basado en promedio actual</small>
+                            </div>
+                            <div class="proyeccion-item">
+                                <span class="proyeccion-label">Proyección Anual</span>
+                                <span class="proyeccion-value" id="proyeccionAnual">$0</span>
+                                <small>Extrapolación de datos actuales</small>
+                            </div>
+                            <div class="proyeccion-item">
+                                <span class="proyeccion-label">ROI del Sistema</span>
+                                <span class="proyeccion-value success" id="roiSistema">+0%</span>
+                                <small>Retorno de inversión estimado</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alertas + Decisiones -->
+                <div class="reporte-card full-width resumen-ejecutivo">
+                    <div class="ejecutivo-header">
+                        <div>
+                            <h3><i data-lucide="bell"></i> Alertas de Negocio</h3>
+                            <span class="ejecutivo-fecha" id="ejecutivoFecha"></span>
+                        </div>
+                        <span class="ejecutivo-badge" id="ejecutivoBadge"></span>
+                    </div>
+                    <div id="alertasNegocio" class="alertas-wrap"></div>
+
+                    <div class="ejecutivo-divider">
+                        <i data-lucide="clipboard-list"></i>
+                        <h3>Decisiones Pendientes</h3>
+                        <span class="decisiones-hint">Requieren acción de gerencia</span>
+                    </div>
+                    <div id="decisionesPendientes" class="decisiones-wrap"></div>
+                </div>
+            </section>
+
+            <!-- Sección Aprobaciones -->
+            <section id="seccion-aprobaciones" class="admin-section" style="display: none;">
+                <div class="section-header">
+                    <h2>Solicitudes de Registro Pendientes</h2>
+                </div>
+
+                <div class="info-banner">
+                    <i data-lucide="file-check"></i>
+                    <div>
+                        <strong>Revisión de RUT</strong>
+                        <p>Revisa el RUT adjunto de cada solicitante antes de aprobar o rechazar su cuenta.</p>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Cédula</th>
+                                <th>Email</th>
+                                <th>Teléfono</th>
+                                <th>Tipo</th>
+                                <th>Fecha Solicitud</th>
+                                <th>RUT</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaAprobaciones">
+                            <!-- Se llenará dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Sección Categorías -->
+            <section id="seccion-categorias" class="admin-section" style="display: none;">
+                <div class="section-header">
+                    <h2>Categorías de Ganado</h2>
+                    <button onclick="abrirModalCategoria()" class="btn btn-primary">+ Nueva Categoría</button>
+                </div>
+
+                <div class="info-banner">
+                    <span class="icon">🏷️</span>
+                    <div>
+                        <strong>Gestión de Categorías</strong>
+                        <p>Define las categorías de ganado con su código, nombre y sexo. Estas categorías estarán disponibles al crear lotes.</p>
+                    </div>
+                </div>
+
+                <!-- Filtro por sexo -->
+                <div class="cat-filtros">
+                    <button class="cat-filtro-btn active" onclick="filtrarCategorias('todos', this)">Todos</button>
+                    <button class="cat-filtro-btn macho" onclick="filtrarCategorias('macho', this)">♂ Machos</button>
+                    <button class="cat-filtro-btn hembra" onclick="filtrarCategorias('hembra', this)">♀ Hembras</button>
+                    <button class="cat-filtro-btn mixto" onclick="filtrarCategorias('mixto', this)">⚥ Mixto</button>
+                </div>
+
+                <!-- Grid de categorías -->
+                <div class="cat-grid" id="categoriasGrid"></div>
+            </section>
+
+            <!-- Sección Paletas -->
+            <section id="seccion-paletas" class="admin-section" style="display: none;">
+                <div class="section-header">
+                    <h2>Solicitudes de Paleta</h2>
+                    <span class="header-subtitle-small">Evento: <strong id="eventoIdPaletas"></strong></span>
+                </div>
+
+                <div class="info-banner">
+                    <span class="icon">🎫</span>
+                    <div>
+                        <strong>Aprobación de Paletas</strong>
+                        <p>Revisa y aprueba las solicitudes de paleta de los clientes para participar en la subasta.</p>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Email</th>
+                                <th>Hora Solicitud</th>
+                                <th>Estado</th>
+                                <th>Paleta Asignada</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaSolicitudesPaleta"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Sección Configuración -->
+            <section id="seccion-configuracion" class="admin-section" style="display: none;">
+                <div class="section-header">
+                    <h2>Configuración del Sistema</h2>
+                </div>
+
+                <div class="config-grid">
+                    <div class="config-card">
+                        <h3><i data-lucide="sliders-horizontal"></i> Parámetros de Subasta</h3>
+                        <div class="form-group">
+                            <label>Incremento Mínimo de Puja</label>
+                            <input type="number" value="500000" id="incrementoMinimo">
+                        </div>
+                        <div class="form-group">
+                            <label>Tiempo de Cierre (segundos)</label>
+                            <input type="number" value="30" id="tiempoCierre">
+                        </div>
+                        <button class="btn btn-primary">Guardar Cambios</button>
+                    </div>
+
+                    <div class="config-card">
+                        <h3><i data-lucide="bell"></i> Notificaciones</h3>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" checked> Email al registrar usuario
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" checked> Email al ganar subasta
+                            </label>
+                        </div>
+                        <button class="btn btn-primary">Guardar Cambios</button>
+                    </div>
+
+                    <div class="config-card">
+                        <h3><i data-lucide="palette"></i> Personalización</h3>
+                        <div class="form-group">
+                            <label>Nombre de la Empresa</label>
+                            <input type="text" value="Subastas Ganaderas Casanare">
+                        </div>
+                        <div class="form-group">
+                            <label>Logo</label>
+                            <input type="file" accept="image/*">
+                        </div>
+                        <button class="btn btn-primary">Guardar Cambios</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal Categoría -->
+    <div id="modalCategoria" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h3 id="tituloModalCategoria">Nueva Categoría</h3>
+            <form id="formCategoria">
+                <input type="hidden" id="categoriaEditId">
+                <div class="form-group">
+                    <label>Código *</label>
+                    <input type="text" id="categoriaCodigo" required maxlength="6" placeholder="Ej: ML, MC, TP" style="text-transform:uppercase;">
+                    <small class="form-hint">Máximo 6 caracteres, se guardará en mayúsculas</small>
+                </div>
+                <div class="form-group">
+                    <label>Nombre *</label>
+                    <input type="text" id="categoriaNombre" required placeholder="Ej: Macho de Levante">
+                </div>
+                <div class="form-group">
+                    <label>Sexo *</label>
+                    <select id="categoriaSexo" required>
+                        <option value="macho">♂ Macho</option>
+                        <option value="hembra">♀ Hembra</option>
+                        <option value="mixto">⚥ Mixto</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea id="categoriaDescripcion" rows="2" placeholder="Descripción opcional de la categoría..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="button" onclick="cerrarModalCategoria()" class="btn btn-outline">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Crear Evento -->
+    <div id="modalEvento" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3>Crear Nuevo Evento</h3>
+            <form id="formEvento">
+                <div class="form-group">
+                    <label>Nombre del Evento</label>
+                    <input type="text" required>
+                </div>
+                <div class="form-group">
+                    <label>Fecha</label>
+                    <input type="date" required>
+                </div>
+                <div class="form-group">
+                    <label>Hora</label>
+                    <input type="time" required>
+                </div>
+                <div class="form-group">
+                    <label>Ubicación</label>
+                    <input type="text" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Crear Evento</button>
+                    <button type="button" onclick="cerrarModalEvento()" class="btn btn-outline">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Agregar Lote -->
+    <div id="modalLote" class="modal" style="display: none;">
+        <div class="modal-content modal-large">
+            <h3>Agregar Nuevo Lote</h3>
+            <form id="formLote">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Tipo de Ganado *</label>
+                        <select id="loteTipo" required>
+                            <option value="ceba">Ganado de Ceba</option>
+                            <option value="levante">Ganado de Levante</option>
+                            <option value="cria">Ganado de Cría</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Cantidad (cabezas) *</label>
+                        <input type="number" id="loteCantidad" min="1" required placeholder="Ej: 10">
+                    </div>
+                    <div class="form-group">
+                        <label>Peso Promedio (kg) *</label>
+                        <input type="number" id="lotePeso" min="1" required placeholder="Ej: 450">
+                    </div>
+                    <div class="form-group">
+                        <label>Raza *</label>
+                        <input type="text" id="loteRaza" required placeholder="Ej: Brahman">
+                    </div>
+                    <div class="form-group">
+                        <label>Sexo *</label>
+                        <select id="loteSexo" required>
+                            <option value="Macho">Macho</option>
+                            <option value="Hembra">Hembra</option>
+                            <option value="Mixto">Mixto</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Precio Base ($) *</label>
+                        <input type="number" id="lotePrecioBase" min="0" required placeholder="Ej: 15000000">
+                    </div>
+                    <div class="form-group">
+                        <label>Vendedor / Propietario *</label>
+                        <input type="text" id="loteVendedor" required placeholder="Nombre del propietario">
+                    </div>
+                    <div class="form-group">
+                        <label>Procedencia *</label>
+                        <input type="text" id="loteProcedencia" required placeholder="Ej: Finca El Paraíso, Yopal">
+                    </div>
+                    <div class="form-group form-group--full">
+                        <label>Observaciones</label>
+                        <textarea id="loteObservaciones" rows="2" placeholder="Estado sanitario, vacunas, características especiales..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Adjuntar registros -->
+                <div class="adjuntos-section">
+                    <div class="adjuntos-header">
+                        <span class="adjuntos-titulo">📎 Registros del Ganado</span>
+                        <span class="adjuntos-hint">Adjunta documentos, certificados o fotos (PDF, imágenes)</span>
+                    </div>
+                    <div class="adjuntos-dropzone" id="adjuntosDropzone" onclick="document.getElementById('adjuntosInput').click()">
+                        <div class="dropzone-icon">📂</div>
+                        <p>Haz clic para seleccionar archivos</p>
+                        <small>PDF, JPG, PNG — máx. 5 archivos</small>
+                    </div>
+                    <input type="file" id="adjuntosInput" multiple accept=".pdf,.jpg,.jpeg,.png" style="display:none;" onchange="manejarAdjuntos(this)">
+                    <div class="adjuntos-lista" id="adjuntosLista"></div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Agregar Lote</button>
+                    <button type="button" onclick="cerrarModalLote()" class="btn btn-outline">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Crear/Editar Usuario -->
+    <div id="modalUsuario" class="modal" style="display: none;">
+        <div class="modal-content modal-large">
+            <h3 id="tituloModalUsuario">Registrar Nuevo Usuario</h3>
+            <p class="modal-subtitle">Complete la información del usuario. Se generará automáticamente una contraseña temporal.</p>
+            
+            <form id="formUsuario">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Nombre Completo *</label>
+                        <input type="text" id="usuarioNombre" required placeholder="Ej: Juan Pérez">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Cédula *</label>
+                        <input type="text" id="usuarioCedula" required placeholder="Ej: 1234567890">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Teléfono *</label>
+                        <input type="tel" id="usuarioTelefono" required placeholder="Ej: 3001234567">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="usuarioEmail" placeholder="Ej: juan@ejemplo.com">
+                        <small>Opcional - Si no tiene email, se puede dejar vacío</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tipo de Usuario *</label>
+                        <select id="usuarioTipo" required>
+                            <option value="">Seleccione...</option>
+                            <option value="cliente">Cliente</option>
+                            <option value="martillero">Martillero</option>
+                            <option value="tablero">Tablero</option>
+                            <option value="admin">Administrador</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Contraseña Temporal *</label>
+                        <input type="text" id="usuarioPassword" required placeholder="Se generará automáticamente">
+                        <button type="button" onclick="generarPasswordTemporal()" class="btn-small">🔄 Generar</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Notas / Observaciones</label>
+                    <textarea id="usuarioNotas" rows="3" placeholder="Información adicional sobre el usuario..."></textarea>
+                </div>
+
+                <div class="info-box">
+                    <strong>📋 Información importante:</strong>
+                    <ul>
+                        <li>El sistema asignará automáticamente un número de paleta único</li>
+                        <li>La contraseña temporal debe ser entregada al usuario</li>
+                        <li>El usuario podrá cambiar su contraseña después del primer ingreso</li>
+                        <li>Si no tiene email, puede usar su cédula para iniciar sesión</li>
+                    </ul>
+                </div>
+
+                <input type="hidden" id="usuarioId">
+
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">💾 Guardar Usuario</button>
+                    <button type="button" onclick="cerrarModalUsuario()" class="btn btn-outline">Cancelar</button>
+                </div>
+            </form>
+
+            <!-- Resultado del registro -->
+            <div id="resultadoRegistro" class="resultado-registro" style="display: none;">
+                <div class="success-icon">✅</div>
+                <h3>¡Usuario Registrado Exitosamente!</h3>
+                
+                <div class="credenciales-box">
+                    <h4>Credenciales del Usuario:</h4>
+                    <div class="credencial-item">
+                        <span class="label">Nombre:</span>
+                        <span class="value" id="resultNombre">-</span>
+                    </div>
+                    <div class="credencial-item">
+                        <span class="label">Paleta Digital:</span>
+                        <span class="value paleta-grande" id="resultPaleta">#000</span>
+                    </div>
+                    <div class="credencial-item">
+                        <span class="label">Usuario (para login):</span>
+                        <span class="value" id="resultUsuario">-</span>
+                    </div>
+                    <div class="credencial-item">
+                        <span class="label">Contraseña Temporal:</span>
+                        <span class="value password-temp" id="resultPassword">-</span>
+                    </div>
+                </div>
+
+                <div class="alert-warning">
+                    <strong>⚠️ Importante:</strong> Entregue estas credenciales al usuario. Puede imprimir o copiar esta información.
+                </div>
+
+                <div class="modal-actions">
+                    <button onclick="imprimirCredenciales()" class="btn btn-secondary"><i data-lucide="printer"></i> Imprimir</button>
+                    <button onclick="copiarCredenciales()" class="btn btn-secondary"><i data-lucide="copy"></i> Copiar</button>
+                    <button onclick="cerrarModalUsuario()" class="btn btn-primary">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Ver RUT -->
+    <div id="modalRut" class="modal" style="display: none;">
+        <div class="modal-content modal-large">
+            <h3>RUT del Solicitante</h3>
+            <p id="rutSolicitanteNombre"></p>
+            <div id="rutViewer" style="margin: 16px 0;"></div>
+            <div class="modal-actions">
+                <button onclick="document.getElementById('modalRut').style.display='none'" class="btn btn-outline">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/exportar.js"></script>
+    <script src="js/panel-admin.js"></script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

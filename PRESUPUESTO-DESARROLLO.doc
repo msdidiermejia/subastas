@@ -1,0 +1,329 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+<meta charset="UTF-8">
+<style>
+body { font-family: Calibri, Arial, sans-serif; font-size: 11pt; color: #333; margin: 2cm; line-height: 1.6; }
+h1 { color: #D35400; font-size: 22pt; text-align: center; border-bottom: 3px solid #D35400; padding-bottom: 10px; margin-top: 40px; }
+h2 { color: #E67E22; font-size: 16pt; border-bottom: 2px solid #E67E22; padding-bottom: 5px; margin-top: 30px; }
+h3 { color: #555; font-size: 13pt; margin-top: 20px; }
+table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 10pt; }
+th { background-color: #D35400; color: white; padding: 10px 8px; text-align: left; font-weight: bold; }
+td { padding: 8px; border: 1px solid #ddd; }
+tr:nth-child(even) { background-color: #FDF2E9; }
+.total-row { background-color: #D35400 !important; color: white; font-weight: bold; font-size: 11pt; }
+.subtotal-row { background-color: #FDEBD0 !important; font-weight: bold; }
+.header-info { text-align: center; margin-bottom: 30px; }
+.header-info p { margin: 3px 0; color: #666; }
+.logo-text { font-size: 28pt; font-weight: bold; color: #D35400; letter-spacing: 2px; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 9pt; font-weight: bold; }
+.fase1 { background: #E8F5E9; color: #2E7D32; }
+.fase2 { background: #E3F2FD; color: #1565C0; }
+.fase3 { background: #FFF3E0; color: #E65100; }
+.fase4 { background: #F3E5F5; color: #7B1FA2; }
+.nota { background: #FFF8E1; border-left: 4px solid #FFC107; padding: 10px 15px; margin: 15px 0; font-size: 10pt; }
+.resumen-box { background: #FDF2E9; border: 2px solid #D35400; border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; }
+.resumen-box .monto { font-size: 24pt; color: #D35400; font-weight: bold; }
+.page-break { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<div class="header-info">
+<div class="logo-text">SUBACASANARE</div>
+<p style="font-size: 14pt; color: #E67E22;">Subastas Ganaderas - Yopal, Casanare</p>
+<br>
+<h1 style="border: none; margin-top: 10px;">PROPUESTA DE DESARROLLO<br>Sistema de Subastas Ganaderas en Tiempo Real</h1>
+<p style="font-size: 12pt;"><strong>Presupuesto Detallado por Módulos</strong></p>
+<p>Fecha: Abril 2026</p>
+<p>Versión: 1.0</p>
+<p>Documento confidencial</p>
+</div>
+
+<hr style="border: 2px solid #D35400;">
+
+<h2>1. RESUMEN EJECUTIVO</h2>
+
+<p>El presente documento detalla el presupuesto de desarrollo para convertir el prototipo funcional de SubaCasanare en una plataforma de producción completa. El sistema permitirá realizar subastas ganaderas híbridas (presencial + remoto) en tiempo real, con gestión integral de eventos, lotes, usuarios, pagos y reportes financieros.</p>
+
+<p>El desarrollo se divide en <strong>8 módulos principales</strong> organizados en <strong>4 fases de entrega</strong>, con un tiempo estimado total de <strong>5 a 6 meses</strong>.</p>
+
+<div class="resumen-box">
+<p style="font-size: 12pt; margin: 0;">Inversión Total Estimada</p>
+<div class="monto">$148.500.000 - $187.000.000 COP</div>
+<p style="font-size: 10pt; color: #666; margin: 5px 0;">Equivalente aproximado: USD $35.000 - $44.000</p>
+</div>
+
+<h2>2. ALCANCE TECNOLÓGICO</h2>
+
+<h3>Stack Tecnológico Propuesto</h3>
+<table>
+<tr><th>Componente</th><th>Tecnología</th><th>Justificación</th></tr>
+<tr><td>Frontend Web</td><td>React.js / Next.js</td><td>Rendimiento, SEO, componentes reutilizables</td></tr>
+<tr><td>Backend / API</td><td>Node.js + Express</td><td>Tiempo real con WebSockets, ecosistema amplio</td></tr>
+<tr><td>Base de Datos</td><td>PostgreSQL</td><td>Transacciones financieras, integridad de datos</td></tr>
+<tr><td>Tiempo Real</td><td>Socket.io / WebSockets</td><td>Pujas en vivo con latencia mínima</td></tr>
+<tr><td>Streaming</td><td>WebRTC + HLS</td><td>Video en vivo del martillero</td></tr>
+<tr><td>Autenticación</td><td>JWT + OAuth 2.0</td><td>Seguridad, sesiones, roles</td></tr>
+<tr><td>Hosting</td><td>AWS / DigitalOcean</td><td>Escalabilidad, disponibilidad</td></tr>
+<tr><td>App Móvil (opcional)</td><td>React Native</td><td>Código compartido con web, iOS + Android</td></tr>
+</table>
+
+<div class="page-break"></div>
+<h2>3. PRESUPUESTO DETALLADO POR MÓDULOS</h2>
+
+<h3>MÓDULO 1: Infraestructura Base y Autenticación</h3>
+<p><span class="badge fase1">FASE 1 - Semanas 1 a 4</span></p>
+<p>Configuración del proyecto, base de datos, API REST, sistema de autenticación con roles y permisos.</p>
+<table>
+<tr><th>Ítem</th><th>Descripción</th><th>Horas Est.</th><th>Valor COP</th></tr>
+<tr><td>Arquitectura del proyecto</td><td>Diseño de base de datos, estructura API, documentación técnica</td><td>24</td><td>$2.400.000</td></tr>
+<tr><td>Configuración servidor</td><td>Setup de entorno, CI/CD, dominio, SSL, hosting</td><td>16</td><td>$1.600.000</td></tr>
+<tr><td>Base de datos</td><td>Modelado PostgreSQL, migraciones, seeds</td><td>32</td><td>$3.200.000</td></tr>
+<tr><td>API REST base</td><td>CRUD de entidades principales, validaciones</td><td>40</td><td>$4.000.000</td></tr>
+<tr><td>Autenticación y roles</td><td>Registro, login, JWT, roles (admin, martillero, cliente), permisos</td><td>32</td><td>$3.200.000</td></tr>
+<tr><td>Recuperación de contraseña</td><td>Flujo de reset por email</td><td>8</td><td>$800.000</td></tr>
+<tr class="subtotal-row"><td colspan="2">Subtotal Módulo 1</td><td>152</td><td>$15.200.000</td></tr>
+</table>
+
+<h3>MÓDULO 2: Landing Page y Registro Público</h3>
+<p><span class="badge fase1">FASE 1 - Semanas 3 a 5</span></p>
+<p>Página principal pública, registro de usuarios con carga de documentos, aprobación por administrador.</p>
+<table>
+<tr><th>Ítem</th><th>Descripción</th><th>Horas Est.</th><th>Valor COP</th></tr>
+<tr><td>Landing page</td><td>Diseño responsive, secciones informativas, SEO</td><td>24</td><td>$2.400.000</td></tr>
+<tr><td>Registro de usuarios</td><td>Formulario con validaciones, carga de RUT (PDF/imagen)</td><td>20</td><td>$2.000.000</td></tr>
+<tr><td>Almacenamiento de archivos</td><td>Integración con S3 o almacenamiento en nube para documentos</td><td>12</td><td>$1.200.000</td></tr>
+<tr><td>Flujo de aprobación</td><td>Cola de solicitudes, revisión de RUT, aprobar/rechazar</td><td>16</td><td>$1.600.000</td></tr>
+<tr><td>Notificaciones por email</td><td>Confirmación de registro, aprobación, rechazo</td><td>12</td><td>$1.200.000</td></tr>
+<tr class="subtotal-row"><td colspan="2">Subtotal Módulo 2</td><td>84</td><td>$8.400.000</td></tr>
+</table>
+
+<h3>MÓDULO 3: Panel de Administración</h3>
+<p><span class="badge fase2">FASE 2 - Semanas 5 a 10</span></p>
+<p>Gestión completa de eventos, lotes, usuarios, categorías, paletas y configuración del sistema.</p>
+<table>
+<tr><th>Ítem</th><th>Descripción</th><th>Horas Est.</th><th>Valor COP</th></tr>
+<tr><td>Gestión de eventos</td><td>CRUD de eventos de subasta, estados, programación</td><td>24</td><td>$2.400.000</td></tr>
+<tr><td>Gestión de lotes</td><td>CRUD de lotes con fotos, documentos, categorías, filtros</td><td>32</td><td>$3.200.000</td></tr>
+<tr><td>Gestión de usuarios</td><td>Listado, búsqueda, filtros, edición, registro presencial</td><td>24</td><td>$2.400.000</td></tr>
+<tr><td>Gestión de categorías</td><td>CRUD de categorías de ganado con códigos y sexo</td><td>12</td><td>$1.200.000</td></tr>
+<tr><td>Aprobación de paletas</td><td>Solicitudes por evento, asignación, aprobación/rechazo</td><td>16</td><td>$1.600.000</td></tr>
+<tr><td>Aprobación de registros</td><td>Revisión de RUT, aprobar/rechazar solicitudes</td><td>12</td><td>$1.200.000</td></tr>
+<tr><td>Configuración del sistema</td><td>Parámetros de subasta, comisiones, notificaciones</td><td>16</td><td>$1.600.000</td></tr>
+<tr><td>Exportación de datos</td><td>Exportar a Excel y PDF (usuarios, lotes, resultados)</td><td>20</td><td>$2.000.000</td></tr>
+<tr class="subtotal-row"><td colspan="2">Subtotal Módulo 3</td><td>156</td><td>$15.600.000</td></tr>
+</table>
+
+<h3>MÓDULO 4: Dashboard del Usuario (Cliente)</h3>
+<p><span class="badge fase2">FASE 2 - Semanas 6 a 8</span></p>
+<p>Panel personalizado del comprador/vendedor con acceso a subastas, historial y perfil.</p>
+<table>
+<tr><th>Ítem</th><th>Descripción</th><th>Horas Est.</th><th>Valor COP</th></tr>
+<tr><td>Dashboard principal</td><td>Resumen de actividad, accesos rápidos según rol</td><td>20</td><td>$2.000.000</td></tr>
+<tr><td>Catálogo de lotes</td><td>Galería con filtros, búsqueda, detalle con fotos</td><td>24</td><td>$2.400.000</td></tr>
+<tr><td>Historial de pujas</td><td>Listado de pujas realizadas, lotes ganados, liquidaciones</td><td>20</td><td>$2.000.000</td></tr>
+<tr><td>Perfil de usuario</td><td>Edición de datos, cambio de contraseña, paleta digital</td><td>12</td><td>$1.200.000</td></tr>
+<tr class="subtotal-row"><td colspan="2">Subtotal Módulo 4</td><td>76</td><td>$7.600.000</td></tr>
+</table>
+
+<div class="page-break"></div>
+<h3>MÓDULO 5: Subasta en Vivo y Tiempo Real (Módulo Core)</h3>
+<p><span class="badge fase3">FASE 3 - Semanas 9 a 16</span></p>
+<p>Motor principal de la subasta: pujas en tiempo real, sincronización, streaming de video y tablero público.</p>
+<table>
+<tr><th>Ítem</th><th>Descripción</th><th>Horas Est.</th><th>Valor COP</th></tr>
+<tr><td>Motor de pujas en tiempo real</td><td>WebSockets, validación de pujas, incrementos, anti-fraude</td><td>60</td><td>$6.000.000</td></tr>
+<tr><td>Sala de subasta (comprador)</td><td>Interfaz de puja, precio actual, historial en vivo, temporizador</td><td>40</td><td>$4.000.000</td></tr>
+<tr><td>Identificación presencial/remoto</td><td>Diferenciación visual de pujas por canal</td><td>12</td><td>$1.200.000</td></tr>
+<tr><td>Streaming de video</td><td>Integración WebRTC/HLS para transmisión del martillero</td><td>48</td><td>$4.800.000</td></tr>
+<tr><td>Tablero público</td><td>Pantalla para proyectar en el coliseo (precio, lote, pujas)</td><td>24</td><td>$2.400.000</td></tr>
+<tr><td>Sistema de cierre de lote</td><td>Temporizador, adjudicación automática, confirmación</td><td>20</td><td>$2.000.000</td></tr>
+<tr><td>Notificaciones en vivo</td><td>Alertas de nueva puja, lote cerrado, ganador</td><td>16</td><td>$1.600.000</td></tr>
+<tr><td>Manejo de concurrencia</td><td>Optimización para 200+ usuarios simultáneos</td><td>24</td><td>$2.400.000</td></tr>
+<tr class="subtotal-row"><td colspan="2">Subtotal Módulo 5</td><td>244</td><td>$24.400.000</td></tr>
+</table>
+
+<h3>MÓDULO 6: Panel del Martillero</h3>
+<p><span class="badge fase3">FASE 3 - Semanas 11 a 14</span></p>
+<p>Control total de la subasta en vivo por parte del martillero.</p>
+<table>
+<tr><th>Ítem</th><th>Descripción</th><th>Horas Est.</th><th>Valor COP</th></tr>
+<tr><td>Panel de control</td><td>Iniciar, pausar, cerrar lote, navegar entre lotes</td><td>32</td><td>$3.200.000</td></tr>
+<tr><td>Visualización de pujas</td><td>Feed en tiempo real con identificación presencial/remoto</td><td>20</td><td>$2.000.000</td></tr>
+<tr><td>Estadísticas en vivo</td><td>Total pujas, participantes, precio actual, incremento</td><td>16</td><td>$1.600.000</td></tr>
+<tr><td>Adjudicación y cierre</td><td>Confirmar ganador, generar acta, pasar al siguiente lote</td><td>20</td><td>$2.000.000</td></tr>
+<tr><td>Registro de pujas presenciales</td><td>Ingreso manual de pujas de personas sin dispositivo</td><td>16</td><td>$1.600.000</td></tr>
+<tr class="subtotal-row"><td colspan="2">Subtotal Módulo 6</td><td>104</td><td>$10.400.000</td></tr>
+</table>
+
+<h3>MÓDULO 7: Reportes Financieros y Liquidaciones</h3>
+<p><span class="badge fase4">FASE 4 - Semanas 15 a 20</span></p>
+<p>Dashboard financiero, liquidaciones por lote, comisiones, proyecciones y exportación de reportes.</p>
+<table>
+<tr><th>Ítem</th><th>Descripción</th><th>Horas Est.</th><th>Valor COP</th></tr>
+<tr><td>Dashboard financiero</td><td>KPIs: comisiones, volumen transado, lotes, participantes</td><td>32</td><td>$3.200.000</td></tr>
+<tr><td>Cálculo de comisiones</td><td>Comisión comprador y vendedor configurable por evento</td><td>20</td><td>$2.000.000</td></tr>
+<tr><td>Liquidaciones por lote</td><td>Detalle de cada adjudicación, comprador, vendedor, montos</td><td>24</td><td>$2.400.000</td></tr>
+<tr><td>Métricas operativas</td><td>Ticket promedio, pujas por lote, tasa de adjudicación</td><td>16</td><td>$1.600.000</td></tr>
+<tr><td>Comparativa presencial vs remoto</td><td>Análisis de participación por canal</td><td>12</td><td>$1.200.000</td></tr>
+<tr><td>Proyecciones</td><td>Proyección mensual, anual, ROI del sistema</td><td>16</td><td>$1.600.000</td></tr>
+<tr><td>Exportación de reportes</td><td>Generación de PDF y Excel con formato profesional</td><td>24</td><td>$2.400.000</td></tr>
+<tr><td>Alertas de negocio</td><td>Semáforo de salud, decisiones pendientes</td><td>16</td><td>$1.600.000</td></tr>
+<tr class="subtotal-row"><td colspan="2">Subtotal Módulo 7</td><td>160</td><td>$16.000.000</td></tr>
+</table>
+
+<h3>MÓDULO 8: Pruebas, Seguridad y Despliegue</h3>
+<p><span class="badge fase4">FASE 4 - Semanas 18 a 24</span></p>
+<p>Testing integral, seguridad, optimización de rendimiento y puesta en producción.</p>
+<table>
+<tr><th>Ítem</th><th>Descripción</th><th>Horas Est.</th><th>Valor COP</th></tr>
+<tr><td>Pruebas unitarias y de integración</td><td>Cobertura de API, lógica de pujas, autenticación</td><td>40</td><td>$4.000.000</td></tr>
+<tr><td>Pruebas de carga</td><td>Simulación de 200+ usuarios simultáneos en subasta</td><td>20</td><td>$2.000.000</td></tr>
+<tr><td>Seguridad</td><td>Auditoría, protección XSS/CSRF/SQL Injection, rate limiting</td><td>24</td><td>$2.400.000</td></tr>
+<tr><td>Optimización de rendimiento</td><td>Caché, lazy loading, compresión, CDN</td><td>20</td><td>$2.000.000</td></tr>
+<tr><td>Despliegue a producción</td><td>Configuración de servidor, dominio, SSL, backups</td><td>16</td><td>$1.600.000</td></tr>
+<tr><td>Documentación técnica</td><td>API docs, manual de usuario, manual de administrador</td><td>24</td><td>$2.400.000</td></tr>
+<tr><td>Capacitación</td><td>Entrenamiento al equipo operativo (2 sesiones)</td><td>12</td><td>$1.200.000</td></tr>
+<tr class="subtotal-row"><td colspan="2">Subtotal Módulo 8</td><td>156</td><td>$15.600.000</td></tr>
+</table>
+
+<div class="page-break"></div>
+<h2>4. RESUMEN DE INVERSIÓN</h2>
+
+<table>
+<tr><th>Módulo</th><th>Descripción</th><th>Horas</th><th>Valor COP</th></tr>
+<tr><td>Módulo 1</td><td>Infraestructura Base y Autenticación</td><td>152</td><td>$15.200.000</td></tr>
+<tr><td>Módulo 2</td><td>Landing Page y Registro Público</td><td>84</td><td>$8.400.000</td></tr>
+<tr><td>Módulo 3</td><td>Panel de Administración</td><td>156</td><td>$15.600.000</td></tr>
+<tr><td>Módulo 4</td><td>Dashboard del Usuario (Cliente)</td><td>76</td><td>$7.600.000</td></tr>
+<tr><td>Módulo 5</td><td>Subasta en Vivo y Tiempo Real</td><td>244</td><td>$24.400.000</td></tr>
+<tr><td>Módulo 6</td><td>Panel del Martillero</td><td>104</td><td>$10.400.000</td></tr>
+<tr><td>Módulo 7</td><td>Reportes Financieros y Liquidaciones</td><td>160</td><td>$16.000.000</td></tr>
+<tr><td>Módulo 8</td><td>Pruebas, Seguridad y Despliegue</td><td>156</td><td>$15.600.000</td></tr>
+<tr class="subtotal-row"><td colspan="2">SUBTOTAL DESARROLLO</td><td>1.132</td><td>$113.200.000</td></tr>
+</table>
+
+<h3>Costos Adicionales</h3>
+<table>
+<tr><th>Concepto</th><th>Descripción</th><th>Valor COP</th></tr>
+<tr><td>Diseño UI/UX profesional</td><td>Diseño de interfaces, branding, guía de estilos</td><td>$8.000.000</td></tr>
+<tr><td>Infraestructura primer año</td><td>Servidor, dominio, SSL, CDN, almacenamiento, email</td><td>$7.200.000</td></tr>
+<tr><td>Servidor de streaming</td><td>Servicio de video en vivo (WebRTC/HLS) primer año</td><td>$6.000.000</td></tr>
+<tr><td>Imprevistos y ajustes (15%)</td><td>Cambios de alcance, ajustes post-entrega</td><td>$14.100.000</td></tr>
+<tr class="subtotal-row"><td colspan="2">SUBTOTAL ADICIONALES</td><td>$35.300.000</td></tr>
+</table>
+
+<div class="resumen-box">
+<p style="font-size: 14pt; margin: 0; font-weight: bold;">INVERSIÓN TOTAL ESTIMADA</p>
+<div class="monto">$148.500.000 COP</div>
+<p style="font-size: 10pt; color: #666;">Aproximadamente USD $35.000</p>
+<p style="font-size: 10pt; color: #666;">1.132 horas de desarrollo | 5-6 meses de ejecución</p>
+</div>
+
+<h2>5. CRONOGRAMA DE EJECUCIÓN</h2>
+
+<table>
+<tr><th>Fase</th><th>Módulos</th><th>Duración</th><th>Entregable</th></tr>
+<tr><td><span class="badge fase1">Fase 1</span></td><td>Módulo 1 + 2: Infraestructura, Auth, Landing</td><td>Semanas 1-5</td><td>Backend funcional, registro de usuarios, landing pública</td></tr>
+<tr><td><span class="badge fase2">Fase 2</span></td><td>Módulo 3 + 4: Admin + Dashboard Cliente</td><td>Semanas 5-10</td><td>Panel admin completo, dashboard de usuario</td></tr>
+<tr><td><span class="badge fase3">Fase 3</span></td><td>Módulo 5 + 6: Subasta en Vivo + Martillero</td><td>Semanas 9-16</td><td>Motor de pujas, streaming, panel martillero</td></tr>
+<tr><td><span class="badge fase4">Fase 4</span></td><td>Módulo 7 + 8: Reportes + Pruebas + Deploy</td><td>Semanas 15-24</td><td>Reportes financieros, sistema en producción</td></tr>
+</table>
+
+<div class="nota">
+<strong>Nota:</strong> Las fases se solapan parcialmente para optimizar tiempos. Cada fase incluye una entrega funcional que puede ser revisada y validada por el cliente antes de continuar.
+</div>
+
+<div class="page-break"></div>
+<h2>6. OPCIONES DE PAGO</h2>
+
+<table>
+<tr><th>Opción</th><th>Estructura</th><th>Valor</th></tr>
+<tr><td><strong>Opción A: Pago por fases</strong></td><td>30% inicio + 25% Fase 2 + 25% Fase 3 + 20% entrega final</td><td>$148.500.000</td></tr>
+<tr><td><strong>Opción B: Pago mensual</strong></td><td>6 cuotas mensuales iguales</td><td>$26.200.000/mes<br>(Total: $157.200.000)</td></tr>
+<tr><td><strong>Opción C: Pago anticipado</strong></td><td>100% al inicio con descuento del 10%</td><td>$133.650.000</td></tr>
+</table>
+
+<h2>7. MÓDULOS OPCIONALES (FASE 2 DEL PRODUCTO)</h2>
+
+<p>Funcionalidades adicionales que pueden contratarse después del lanzamiento:</p>
+
+<table>
+<tr><th>Módulo Opcional</th><th>Descripción</th><th>Valor Estimado</th></tr>
+<tr><td>App Móvil Nativa</td><td>Aplicación iOS + Android con React Native</td><td>$45.000.000 - $60.000.000</td></tr>
+<tr><td>Pasarela de Pagos</td><td>Integración con PSE, tarjetas, Nequi para garantías/depósitos</td><td>$12.000.000 - $18.000.000</td></tr>
+<tr><td>Facturación Electrónica</td><td>Integración con DIAN para facturación electrónica</td><td>$10.000.000 - $15.000.000</td></tr>
+<tr><td>Chat en Vivo</td><td>Sistema de mensajería entre participantes y soporte</td><td>$6.000.000 - $8.000.000</td></tr>
+<tr><td>Notificaciones Push</td><td>Alertas en celular para próximas subastas, resultados</td><td>$5.000.000 - $7.000.000</td></tr>
+<tr><td>Integración ICA</td><td>Conexión con sistemas del ICA para trazabilidad animal</td><td>$8.000.000 - $12.000.000</td></tr>
+<tr><td>Multi-idioma</td><td>Soporte para inglés (compradores internacionales)</td><td>$4.000.000 - $6.000.000</td></tr>
+</table>
+
+<h2>8. COSTOS OPERATIVOS MENSUALES (POST-LANZAMIENTO)</h2>
+
+<table>
+<tr><th>Concepto</th><th>Valor Mensual</th><th>Valor Anual</th></tr>
+<tr><td>Hosting y servidor</td><td>$400.000</td><td>$4.800.000</td></tr>
+<tr><td>Servicio de streaming</td><td>$500.000</td><td>$6.000.000</td></tr>
+<tr><td>Dominio y SSL</td><td>$25.000</td><td>$300.000</td></tr>
+<tr><td>Email transaccional</td><td>$50.000</td><td>$600.000</td></tr>
+<tr><td>Backups y monitoreo</td><td>$100.000</td><td>$1.200.000</td></tr>
+<tr><td>Soporte técnico (10h/mes)</td><td>$1.000.000</td><td>$12.000.000</td></tr>
+<tr class="subtotal-row"><td>TOTAL MENSUAL</td><td>$2.075.000</td><td>$24.900.000</td></tr>
+</table>
+
+<h2>9. GARANTÍAS Y SOPORTE</h2>
+
+<table>
+<tr><th>Concepto</th><th>Detalle</th></tr>
+<tr><td>Garantía de código</td><td>6 meses de corrección de bugs sin costo adicional</td></tr>
+<tr><td>Entrega de código fuente</td><td>El cliente recibe el 100% del código fuente al finalizar</td></tr>
+<tr><td>Documentación</td><td>Manual técnico, manual de usuario y manual de administrador</td></tr>
+<tr><td>Capacitación</td><td>2 sesiones de capacitación incluidas (equipo operativo)</td></tr>
+<tr><td>Soporte post-lanzamiento</td><td>30 días de soporte prioritario incluidos</td></tr>
+<tr><td>SLA de disponibilidad</td><td>99.5% de uptime garantizado</td></tr>
+</table>
+
+<div class="page-break"></div>
+<h2>10. RETORNO DE INVERSIÓN ESTIMADO</h2>
+
+<p>Basado en una operación de 2 subastas mensuales con 50 lotes promedio y precio promedio de $15.000.000 por lote:</p>
+
+<table>
+<tr><th>Concepto</th><th>Valor</th></tr>
+<tr><td>Volumen mensual transado</td><td>$1.500.000.000</td></tr>
+<tr><td>Comisión total (8%: 3% comprador + 5% vendedor)</td><td>$120.000.000/mes</td></tr>
+<tr><td>Inversión total del sistema</td><td>$148.500.000</td></tr>
+<tr><td>Costos operativos mensuales</td><td>$2.075.000</td></tr>
+<tr class="total-row"><td>Recuperación de inversión</td><td>Aproximadamente 1.3 meses</td></tr>
+<tr class="total-row"><td>ROI estimado primer año</td><td>+850%</td></tr>
+</table>
+
+<div class="nota">
+<strong>Importante:</strong> Estas proyecciones son estimaciones basadas en el mercado de subastas ganaderas de Casanare. Los resultados reales dependerán del volumen de operación, la adopción de usuarios y las condiciones del mercado.
+</div>
+
+<h2>11. CONDICIONES GENERALES</h2>
+
+<ul>
+<li>Los valores están expresados en Pesos Colombianos (COP) y no incluyen IVA.</li>
+<li>El presupuesto tiene vigencia de 60 días a partir de la fecha del documento.</li>
+<li>Cambios significativos en el alcance pueden generar ajustes en el presupuesto.</li>
+<li>El cronograma está sujeto a la disponibilidad oportuna de información y aprobaciones por parte del cliente.</li>
+<li>Se requiere un punto de contacto designado por parte del cliente para validaciones semanales.</li>
+<li>La tarifa hora de desarrollo utilizada es de $100.000 COP/hora.</li>
+</ul>
+
+<br><br>
+<hr style="border: 1px solid #D35400;">
+<div style="text-align: center; margin-top: 30px;">
+<p style="font-size: 14pt; color: #D35400; font-weight: bold;">SUBACASANARE</p>
+<p>Subastas Ganaderas - Yopal, Casanare</p>
+<p style="color: #999; font-size: 9pt;">Documento confidencial - Abril 2026</p>
+<p style="color: #999; font-size: 9pt;">Este presupuesto fue elaborado con base en el prototipo funcional desarrollado.</p>
+</div>
+
+</body>
+</html>

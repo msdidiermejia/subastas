@@ -1,0 +1,226 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #3D1A0A 0%, #1a1a1a 100%);
+    min-height: 100vh;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+header h1 {
+    color: #E8751A;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+header p {
+    color: #666;
+    font-size: 1.1em;
+}
+
+main {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.welcome-section {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.welcome-section h2 {
+    color: #333;
+    font-size: 2em;
+    margin-bottom: 15px;
+}
+
+.welcome-section p {
+    color: #666;
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 15px 30px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+    display: inline-block;
+}
+
+.btn-primary {
+    background: #E8751A;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #c9621200;
+    background: #c96212;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(232, 117, 26, 0.4);
+}
+
+.btn-secondary {
+    background: #3D1A0A;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #2a1007;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(61, 26, 10, 0.4);
+}
+
+.btn-outline {
+    background: white;
+    color: #E8751A;
+    border: 2px solid #E8751A;
+}
+
+.btn-outline:hover {
+    background: #E8751A;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.feature-card {
+    text-align: center;
+    padding: 30px;
+    border-radius: 10px;
+    background: #f7fafc;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.feature-card .icon {
+    font-size: 3em;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.feature-card h3 {
+    color: #E8751A;
+    margin-bottom: 10px;
+    font-size: 1.3em;
+}
+
+.feature-card p {
+    color: #666;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.8em;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+}
+
+/* ── Botones de exportación ── */
+.btn-export {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.82em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+    white-space: nowrap;
+}
+
+.btn-export:hover  { opacity: 0.85; transform: translateY(-1px); }
+.btn-export:active { transform: translateY(0); }
+
+.btn-excel { background: #16a34a; color: #fff; }
+.btn-pdf   { background: #dc2626; color: #fff; }
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.header-export-btns {
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+}
+
+/* ── RESPONSIVE GLOBAL ── */
+@media (max-width: 768px) {
+    /* Quitar overflow:hidden en vistas de panel que lo tienen hardcodeado */
+    body { overflow: auto !important; }
+
+    /* Tablas con scroll horizontal */
+    .table-container,
+    .table-card {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Botones de exportación más compactos */
+    .btn-export { font-size: 0.78em; padding: 7px 10px; }
+
+    /* Headers de sección */
+    .section-header { flex-wrap: wrap; gap: 8px; }
+    .header-actions { flex-wrap: wrap; gap: 6px; }
+}
+
+@media (max-width: 480px) {
+    /* Inputs no hacen zoom en iOS */
+    input, select, textarea { font-size: 16px !important; }
+}

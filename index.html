@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SubaCasanare - Subastas Ganaderas en Yopal</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/home.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <img src="images/logo.png" alt="SubaCasanare Logo" class="brand-logo">
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <a href="#inicio" class="nav-link">Inicio</a>
+                <a href="#nosotros" class="nav-link">Nosotros</a>
+                <a href="#como-funciona" class="nav-link">Cómo Funciona</a>
+                <a href="catalogo.html" class="nav-link">Catálogo</a>
+                <a href="#contacto" class="nav-link">Contacto</a>
+                <div class="nav-menu-actions">
+                    <button onclick="openLoginModal()" class="btn-nav-login">Iniciar Sesión</button>
+                    <button onclick="openRegisterModal()" class="btn-nav-register">Registrarse</button>
+                </div>
+            </div>
+            <div class="nav-actions">
+                <button onclick="openLoginModal()" class="btn-nav-login">Iniciar Sesión</button>
+                <button onclick="openRegisterModal()" class="btn-nav-register">Registrarse</button>
+            </div>
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="badge-icon">📍</span>
+                <span>Yopal, Casanare - Los Llanos Orientales</span>
+            </div>
+            <h1 class="hero-title">
+                La Forma Moderna de<br>
+                <span class="highlight">Subastar Ganado</span>
+            </h1>
+            <p class="hero-subtitle">
+                Tradición llanera + Tecnología digital. Participa presencialmente o desde cualquier lugar de Colombia.
+            </p>
+            <div class="hero-buttons">
+                <button onclick="openRegisterModal()" class="btn btn-hero-primary">
+                    <span>Comenzar Ahora</span>
+                    <span class="btn-arrow">→</span>
+                </button>
+                <a href="#como-funciona" class="btn btn-hero-secondary">
+                    <span class="play-icon">▶</span>
+                    <span>Ver Cómo Funciona</span>
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">2,500+</span>
+                    <span class="stat-label">Lotes Subastados</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">850+</span>
+                    <span class="stat-label">Ganaderos Activos</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">$45B+</span>
+                    <span class="stat-label">Transado Anualmente</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <span>Desliza para explorar</span>
+            <div class="scroll-indicator"></div>
+        </div>
+    </section>
+
+    <!-- Nosotros Section -->
+    <section class="about-section" id="nosotros">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Quiénes Somos</span>
+                <h2 class="section-title">Conectando el Campo con la Tecnología</h2>
+                <p class="section-subtitle">
+                    SubaCasanare es la plataforma líder de subastas ganaderas en los Llanos Orientales,
+                    combinando la tradición de las subastas presenciales con la innovación tecnológica.
+                </p>
+            </div>
+            <div class="about-grid">
+                <div class="about-card">
+                    <div class="about-icon"><i data-lucide="award"></i></div>
+                    <h3>Experiencia</h3>
+                    <p>Más de 15 años facilitando transacciones ganaderas en Casanare</p>
+                </div>
+                <div class="about-card">
+                    <div class="about-icon"><i data-lucide="handshake"></i></div>
+                    <h3>Confianza</h3>
+                    <p>Transparencia total en cada transacción, respaldada por el ICA</p>
+                </div>
+                <div class="about-card">
+                    <div class="about-icon"><i data-lucide="globe"></i></div>
+                    <h3>Alcance Nacional</h3>
+                    <p>Compradores de todo Colombia pueden participar remotamente</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cómo Funciona Section -->
+    <section class="how-it-works" id="como-funciona">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Proceso Simple</span>
+                <h2 class="section-title">¿Cómo Funciona?</h2>
+                <p class="section-subtitle">
+                    Participa en nuestras subastas en solo 3 pasos
+                </p>
+            </div>
+            <div class="steps-container">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon"><i data-lucide="user-plus"></i></div>
+                    <h3>Regístrate</h3>
+                    <p>Crea tu cuenta online o visita nuestra oficina en Yopal. Recibirás tu paleta digital única.</p>
+                </div>
+                <div class="step-connector"></div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon"><i data-lucide="search"></i></div>
+                    <h3>Explora el Catálogo</h3>
+                    <p>Revisa los lotes disponibles con fotos, videos y detalles completos del ganado.</p>
+                </div>
+                <div class="step-connector"></div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon"><i data-lucide="gavel"></i></div>
+                    <h3>Puja y Gana</h3>
+                    <p>Participa en la subasta en vivo, presencial o remotamente.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card-modern">
+                    <div class="feature-icon-modern">📱</div>
+                    <h3>Paleta Digital</h3>
+                    <p>Puja desde tu celular, tablet o computador. Tu paleta siempre contigo.</p>
+                </div>
+                <div class="feature-card-modern">
+                    <div class="feature-icon-modern">📹</div>
+                    <h3>Transmisión en Vivo</h3>
+                    <p>Ve al martillero y el ganado en tiempo real, como si estuvieras allí.</p>
+                </div>
+                <div class="feature-card-modern">
+                    <div class="feature-icon-modern">⚡</div>
+                    <h3>Sincronización Instantánea</h3>
+                    <p>Pujas presenciales y remotas unificadas en un solo sistema.</p>
+                </div>
+                <div class="feature-card-modern">
+                    <div class="feature-icon-modern">🔒</div>
+                    <h3>Seguro y Confiable</h3>
+                    <p>Todas las transacciones respaldadas y certificadas por el ICA.</p>
+                </div>
+                <div class="feature-card-modern">
+                    <div class="feature-icon-modern">💰</div>
+                    <h3>Mejores Precios</h3>
+                    <p>Más compradores = más competencia = mejores precios para vendedores.</p>
+                </div>
+                <div class="feature-card-modern">
+                    <div class="feature-icon-modern">📊</div>
+                    <h3>Historial Completo</h3>
+                    <p>Accede al historial de tus pujas y transacciones en cualquier momento.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>¿Listo para Participar?</h2>
+                <p>Únete a cientos de ganaderos y compradores que ya confían en SubaCasanare</p>
+                <div class="cta-buttons">
+                    <a href="#" onclick="openRegisterModal(); return false;" class="btn btn-cta-primary">Crear Cuenta Gratis</a>
+                    <a href="catalogo.html" class="btn btn-cta-secondary">Ver Próximas Subastas</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contacto">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-brand">
+                        <img src="images/logo_negativo.png" alt="SubaCasanare Logo" class="brand-logo">
+                    </div>
+                    <p class="footer-desc">
+                        La plataforma líder de subastas ganaderas en los Llanos Orientales.
+                        Tradición + Tecnología.
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul class="footer-links">
+                        <li><a href="#nosotros">Nosotros</a></li>
+                        <li><a href="#como-funciona">Cómo Funciona</a></li>
+                        <li><a href="catalogo.html">Catálogo</a></li>
+                        <li><a href="#" onclick="openRegisterModal(); return false;">Registrarse</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contacto</h4>
+                    <ul class="footer-contact">
+                        <li>📍 Yopal, Casanare</li>
+                        <li>📞 (+57) 300 123 4567</li>
+                        <li>✉️ info@subacasanare.com</li>
+                        <li>🕐 Lun - Sáb: 8AM - 6PM</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Síguenos</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link">Facebook</a>
+                        <a href="#" class="social-link">Instagram</a>
+                        <a href="#" class="social-link">WhatsApp</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 SubaCasanare. Todos los derechos reservados.</p>
+                <div class="footer-legal">
+                    <a href="#">Términos y Condiciones</a>
+                    <a href="#">Política de Privacidad</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeLoginModal()">&times;</span>
+            <div class="modal-header">
+                <h2>Iniciar Sesión</h2>
+                <p>Accede a tu cuenta de SubaCasanare</p>
+            </div>
+            <form id="loginForm" class="modal-form">
+                <div class="form-group">
+                    <label for="loginEmail">Correo Electrónico</label>
+                    <input type="email" id="loginEmail" required placeholder="tu@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Contraseña</label>
+                    <input type="password" id="loginPassword" required placeholder="••••••••">
+                </div>
+                <div id="loginErrorMsg" class="error-msg"></div>
+                <button type="submit" class="btn-modal-submit">Iniciar Sesión</button>
+                <div class="modal-footer">
+                    <p>¿No tienes cuenta? <a href="#" onclick="switchToRegister()">Regístrate aquí</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeRegisterModal()">&times;</span>
+            <div class="modal-header">
+                <h2>Crear Cuenta</h2>
+                <p>Únete a la comunidad de SubaCasanare</p>
+            </div>
+            <form id="registerForm" class="modal-form">
+                <div class="form-group">
+                    <label for="regNombre">Nombre Completo</label>
+                    <input type="text" id="regNombre" required placeholder="Juan Pérez">
+                </div>
+                <div class="form-group">
+                    <label for="regCedula">Cédula</label>
+                    <input type="text" id="regCedula" required placeholder="1234567890">
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Correo Electrónico</label>
+                    <input type="email" id="regEmail" required placeholder="tu@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="regTelefono">Teléfono</label>
+                    <input type="tel" id="regTelefono" required placeholder="3001234567">
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Contraseña</label>
+                    <input type="password" id="regPassword" required placeholder="••••••••">
+                </div>
+                <div class="form-group">
+                    <label for="regTipoUsuario">Tipo de Usuario</label>
+                    <select id="regTipoUsuario" required>
+                        <option value="">Seleccione...</option>
+                        <option value="cliente">Cliente</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="regRut">RUT (PDF o imagen) *</label>
+                    <input type="file" id="regRut" accept=".pdf,.jpg,.jpeg,.png" required>
+                    <small>Adjunta tu RUT para verificación. Un administrador aprobará tu cuenta.</small>
+                </div>
+                <div id="registerErrorMsg" class="error-msg"></div>
+                <button type="submit" class="btn-modal-submit">Crear Cuenta</button>
+                <div class="modal-footer">
+                    <p>¿Ya tienes cuenta? <a href="#" onclick="switchToLogin()">Inicia sesión aquí</a></p>
+                </div>
+            </form>
+            <div id="successMessage" class="success-message" style="display: none;">
+                <div class="success-icon">✓</div>
+                <h3>¡Solicitud Enviada!</h3>
+                <p>Tu registro está <strong>pendiente de aprobación</strong>.</p>
+                <p class="success-text">Un administrador revisará tu RUT y activará tu cuenta. Te notificaremos cuando esté lista.</p>
+                <button onclick="closeRegisterModal()" class="btn-modal-submit">Entendido</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/home.js"></script>
+</body>
+</html>

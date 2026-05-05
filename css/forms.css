@@ -1,0 +1,112 @@
+.form-container {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #E8751A;
+}
+
+.btn-block {
+    width: 100%;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.paleta-info {
+    text-align: center;
+    padding: 30px;
+    background: #fff5ee;
+    border-radius: 10px;
+    border: 2px solid #E8751A;
+}
+
+.paleta-info h3 {
+    color: #E8751A;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+.paleta-number {
+    margin: 30px 0;
+}
+
+.paleta-number span {
+    display: block;
+    color: #666;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+.numero-paleta {
+    font-size: 3em;
+    font-weight: bold;
+    color: #3D1A0A;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    display: inline-block;
+    min-width: 150px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.paleta-info p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+    .container {
+        padding: 16px;
+    }
+
+    .form-container {
+        max-width: 100%;
+        padding: 0 4px;
+    }
+
+    header h1 {
+        font-size: 1.4em;
+    }
+
+    .numero-paleta {
+        font-size: 2em;
+        min-width: 100px;
+        padding: 14px;
+    }
+
+    .paleta-info h3 {
+        font-size: 1.4em;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-group input,
+    .form-group select {
+        font-size: 16px; /* evita zoom en iOS */
+    }
+}

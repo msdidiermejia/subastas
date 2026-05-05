@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subasta en Vivo - SubaCasanare</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/subasta.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+<body>
+    <div class="subasta-container">
+        <div class="subasta-header">
+            <div class="header-left">
+                <div class="brand-section">
+                    <img src="images/logo_negativo.png" alt="SubaCasanare" class="header-logo">
+                    <div>
+                        <h2>SUBASTA EN VIVO</h2>
+                        <span class="live-badge"><i data-lucide="radio"></i> EN VIVO</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <button onclick="cambiarModo()" class="btn-modo" id="btnModo">
+                    <span id="modoIcon"><i data-lucide="globe"></i></span>
+                    <span id="modoTexto">Remoto</span>
+                </button>
+                <div class="user-paleta">
+                    <span>Tu Paleta:</span>
+                    <strong id="paletaUsuario">#000</strong>
+                </div>
+                <a href="dashboard.html" class="btn-exit">← Salir</a>
+            </div>
+        </div>
+
+        <div class="subasta-content">
+            <!-- Barra de paleta: siempre visible arriba en todos los modos -->
+            <div class="paleta-bar" id="paletaBar">
+                <div class="paleta-bar-precio">
+                    <span class="paleta-bar-label">Precio Actual</span>
+                    <div class="paleta-bar-valor" id="precioActualBar">$15,000,000</div>
+                </div>
+                <div class="paleta-bar-accion">
+                    <button id="btnSolicitarPaleta" class="btn-pujar btn-solicitar-paleta">
+                        <span class="btn-icon"><i data-lucide="credit-card"></i></span>
+                        <span class="btn-text">SOLICITAR PALETA</span>
+                    </button>
+                    <button id="btnPujar" class="btn-pujar" style="display:none;">
+                        <span class="btn-icon"><i data-lucide="gavel"></i></span>
+                        <span class="btn-text">PUJAR</span>
+                        <span class="btn-precio" id="btnPrecio">$15,500,000</span>
+                    </button>
+                    <p class="puja-info" id="pujaInfo">Solicita tu paleta para participar</p>
+                </div>
+            </div>
+            <!-- Video del Martillero / Historial de Pujas (según modo) -->
+            <div class="video-section">
+                <!-- Video (solo modo remoto) -->
+                <div class="video-container" id="videoContainer">
+                    <div class="video-placeholder">
+                        <div class="martillero-avatar"><i data-lucide="user"></i></div>
+                        <p>Martillero: Carlos Rodríguez</p>
+                        <div class="live-badge"><i data-lucide="radio"></i> EN VIVO</div>
+                    </div>
+                </div>
+                
+                <!-- Historial de Pujas Grande (solo modo presencial) -->
+                <div class="historial-grande" id="historialGrande" style="display: none;">
+                    <div class="historial-header">
+                        <h3><i data-lucide="bar-chart-2"></i> Historial de Pujas en Tiempo Real</h3>
+                        <div class="modo-badge-presencial"><i data-lucide="building-2"></i> MODO COLISEO</div>
+                    </div>
+                    <div class="pujas-list-grande" id="pujasListGrande">
+                        <div class="empty-pujas">
+                            <div class="icon">⏳</div>
+                            <p>Esperando pujas...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Información del Lote Actual -->
+                <div class="lote-info">
+                    <div class="lote-header">
+                        <h3>Lote Actual: <span id="loteNumero">#15</span></h3>
+                        <span class="lote-tipo" id="loteTipo">Ganado de Ceba</span>
+                    </div>
+                    <div class="lote-details">
+                        <div class="detail-item">
+                            <span class="label">Cantidad:</span>
+                            <span class="value" id="loteCantidad">10 cabezas</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Sexo:</span>
+                            <span class="value" id="loteSexo">Macho</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Raza:</span>
+                            <span class="value" id="loteRaza">Brahman</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Peso Promedio:</span>
+                            <span class="value" id="lotePeso">450 kg</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Peso Total:</span>
+                            <span class="value" id="lotePesoTotal">4,500 kg</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Procedencia:</span>
+                            <span class="value" id="loteProcedencia">Finca El Paraíso, Yopal</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Precio Base:</span>
+                            <span class="value" id="precioBase">$15,000,000</span>
+                        </div>
+                        <div class="detail-item detail-item--full">
+                            <span class="label">Observaciones:</span>
+                            <span class="value" id="loteObservaciones">Animales en buen estado sanitario, vacunados.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resumen de compras del día -->
+                <div class="resumen-compras" id="resumenCompras">
+                    <div class="resumen-header">
+                        <span class="resumen-icon">🧾</span>
+                        <h4>Mis Compras del Día</h4>
+                    </div>
+                    <div class="resumen-vacio" id="resumenVacio">
+                        <span>Aún no has ganado ningún lote hoy</span>
+                    </div>
+                    <div class="resumen-lista" id="resumenLista" style="display:none;"></div>
+                    <div class="resumen-total" id="resumenTotal" style="display:none;">
+                        <span>Total invertido:</span>
+                        <strong id="resumenTotalValor">$0</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel de Pujas -->
+            <div class="pujas-section">
+                <div class="precio-actual">
+                    <span class="label">Precio Actual</span>
+                    <div class="precio-display" id="precioActual">$15,000,000</div>
+                    <span class="incremento">Incremento: $500,000</span>
+                </div>
+
+                <!-- Historial Compacto (solo modo remoto) -->
+                <div class="historial-pujas" id="historialCompacto">
+                    <h4>Mis Pujas en Este Lote</h4>
+                    <div class="pujas-list" id="pujasList">
+                        <!-- Las pujas se agregarán dinámicamente -->
+                    </div>
+                </div>
+
+                <div class="controles-adicionales">
+                    <button class="btn-secondary" onclick="siguienteLote()">
+                        Siguiente Lote →
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/subasta-live.js"></script>
+
+    <!-- Historial de mis pujas visible en mobile (order:3) -->
+    <style>
+        @media (min-width: 769px) { .historial-mobile-wrap { display: none; } }
+    </style>
+    <div class="historial-mobile-wrap" style="order:3; padding: 0 10px;">
+        <div style="background:var(--dark-bg);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:14px;">
+            <h4 style="color:#fff;font-size:0.85em;margin-bottom:10px;">Mis Pujas en Este Lote</h4>
+            <div id="pujasListMobile"></div>
+        </div>
+    </div>
+</body>
+</html>
